@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Spatie\Permission\Traits\HasRoles;
+
+class User extends Authenticatable
+{
+    use HasFactory, HasRoles, Notifiable, TwoFactorAuthenticatable;
+
+    protected $fillable = ['name', 'email', 'password', 'email_verified_at', 'remember_token', 'company_id'];
+    protected $hidden = ['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'];
+    protected function casts(): array
+    {
+        return ['password' => 'hashed', 'email_verified_at' => 'datetime', 'two_factor_confirmed_at' => 'datetime'];
+    }
+
+    public function company() { return $this->belongsTo(Company::class); }
+}
