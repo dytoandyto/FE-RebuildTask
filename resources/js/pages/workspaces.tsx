@@ -4,10 +4,10 @@ import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import { Page, revealProgress } from '@inertiajs/core';
 import { act, useState } from "react";
-import { WorkspaceHeader } from "@/components/workspace/WorkspaceHeader";
-import { WorkspaceControls } from "@/components/workspace/WorkspaceControls";
-import { WorkspaceCard } from "@/components/workspace/WorkspaceCard";
-import { WorkspaceStats } from "@/components/workspace/WorkspacesStats";
+import { WorkspaceHeader } from "@/layouts/workspace/WorkspaceHeader";
+import { WorkspaceControls } from "@/layouts/workspace/WorkspaceControls";
+import { WorkspaceCard } from "@/layouts/workspace/WorkspaceCard";
+import { WorkspaceStats } from "@/layouts/workspace/WorkspacesStats";
 import { WORKSPACES_DUMMY } from "@/data/workspace-data";
 
 interface WorkspacesProps extends Page {

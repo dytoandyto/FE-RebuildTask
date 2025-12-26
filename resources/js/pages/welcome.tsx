@@ -1,10 +1,10 @@
-import { Features } from '@/components/landing_page/features';
-import { Footer } from '@/components/landing_page/footer';
-import { Hero } from '@/components/landing_page/hero';
-import { Navbar } from '@/components/landing_page/navbar';
-import { PricingTeaser } from '@/components/landing_page/pricing';
-import { ProductPreview } from '@/components/landing_page/productpreview';
-import { Testimonials } from '@/components/landing_page/testimonial';
+import { Features } from '@/layouts/landing_page/features';
+import { Footer } from '@/layouts/landing_page/footer';
+import { Hero } from '@/layouts/landing_page/hero';
+import { Navbar } from '@/layouts/landing_page/navbar';
+import { PricingTeaser } from '@/layouts/landing_page/pricing';
+import { ProductPreview } from '@/layouts/landing_page/productpreview';
+import { Testimonials } from '@/layouts/landing_page/testimonial';
 import { dashboard, login, register } from '@/routes';
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';

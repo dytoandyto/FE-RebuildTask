@@ -13,7 +13,7 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
     const page = usePage();
 
     // Active Style: Menggunakan Sada Red dengan latar transparan yang elegan
-    const activeClass = "bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-500 font-bold shadow-sm ring-1 ring-red-500/20";
+    const activeClass = "bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-white-500 font-bold shadow-sm ring-1 ring-red-500/20";
     
     return (
         <SidebarGroup className="px-2 py-0">
@@ -50,7 +50,7 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
 
 export function NavManagement({ items = [] }: { items: NavItem[] }) {
     const page = usePage();
-    const activeClass = "bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-500 font-bold shadow-sm ring-1 ring-red-500/20";
+    const activeClass = "bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-white-500 font-bold shadow-sm ring-1 ring-red-500/20";
 
     return (
         <SidebarGroup className="px-2 py-0 mt-4">

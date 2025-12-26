@@ -27,6 +27,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('teams', function () {
         return Inertia::render('teams');
     })->name('teams');
+    Route::get('bugs', function () {
+        return Inertia::render('bugs');
+    })->name('bugs');
+    Route::get('timesheets', function () {
+        return Inertia::render('timesheets');
+    })->name('timesheets');
+    Route::get('reports', function () {
+        return Inertia::render('reports');
+    })->name('reports');
+    Route::get('invoices', function () {
+        return Inertia::render('invoices');
+    })->name('invoices');
 });
 
 Route::middleware(['auth', 'role:super-admin'])->group(function () {

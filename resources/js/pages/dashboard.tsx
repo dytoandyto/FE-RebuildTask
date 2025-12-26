@@ -8,7 +8,6 @@ import { StatsGrid } from "@/layouts/dashboard/StatGrid";
 import { ActiveWorkspaces } from "@/layouts/dashboard/ActiveWorkspace";
 import { QuickActions } from "@/layouts/dashboard/QuickAction";
 import { TeamMembers } from "@/layouts/dashboard/TeamMembers";
-import { RecentTasks } from "@/layouts/dashboard/RecentTask";
 import { HeaderDashboard } from "@/layouts/dashboard/HeaderDashboard";
 import { DASHBOARD_STATS_DUMMY } from "@/data/dashboard";
 import { WORKSPACE_DUMMY } from "@/data/workspace";

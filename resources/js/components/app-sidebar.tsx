@@ -1,7 +1,7 @@
 import { NavFooter } from '@/components/nav-footer';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { dashboard, projects, tasks, workspaces } from '@/routes';
+import { bugs, dashboard, projects, tasks, workspaces } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { BugIcon, Building2, ChartColumnIncreasing, Clock, FileTextIcon, FolderKanban, LayoutGrid, MessageCircleQuestionIcon, Settings, Shield, SquareCheck, Users, } from 'lucide-react';
@@ -40,7 +40,7 @@ export function AppSidebar() {
     ];
 
     const managementNavItems: NavItemWithActive[] = [
-        { title: 'Bug & Request', href: '/bug-request', icon: BugIcon },
+        { title: 'Bug & Request', href: bugs(), icon: BugIcon },
         { title: 'Timesheets', href: '/timesheets', icon: Clock },
         { title: 'Reports', href: '/reports', icon: ChartColumnIncreasing },
         { title: 'Invoices', href: '/invoices', icon: FileTextIcon }

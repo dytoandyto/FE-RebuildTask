@@ -17,19 +17,19 @@ export function AppSidebarHeader({
             <div className="flex flex-1 items-center gap-4">
                 <div className="flex items-center gap-2">
                     <SidebarTrigger className="-ml-1" />
-                    <div className="hidden h-4 w-px bg-border md:block" /> {/* Separator halus */}
+                    {/* <div className="hidden h-4 w-px bg-border md:block" /> Separator halus */}
                     <Breadcrumbs breadcrumbs={breadcrumbs} />
                 </div>
                 
                 {/* Search Bar: Menggunakan variabel Sada Red untuk focus state */}
-                <div className="relative hidden flex-1 max-w-md mx-4 lg:block"> 
+                {/* <div className="relative hidden flex-1 max-w-md mx-4 lg:block"> 
                     <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground transition-colors group-focus-within:text-sada-red" />
                     <Input
                         type="text"
                         placeholder="Search tasks, projects..."
                         className="h-9 w-full rounded-xl border-border bg-muted/30 pl-10 text-sm transition-all focus:bg-background focus:ring-4 focus:ring-sada-red/10 focus:border-sada-red/50" 
                     />
-                </div>
+                </div> */}
             </div>
 
             {/* Kanan: Actions & Profile */}

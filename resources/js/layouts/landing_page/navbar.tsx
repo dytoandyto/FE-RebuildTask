@@ -1,5 +1,5 @@
 import { Menu } from "lucide-react";
-import AppLogoIcon from "../app-logo-icon";
+import AppLogoIcon from "../../components/app-logo-icon";
 import { home, login, register } from "@/routes";
 import { Link } from "@inertiajs/react";
 

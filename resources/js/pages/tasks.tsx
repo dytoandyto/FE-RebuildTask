@@ -1,14 +1,14 @@
 import AppLayout from '@/layouts/app-layout';
 import { Head, usePage } from '@inertiajs/react';
 import { Page } from '@inertiajs/core';
-import { TaskHeader } from '@/components/tasks/tasksHeader';
-import { TaskStats } from '@/components/tasks/tasksStats';
-import { TaskControls } from '@/components/tasks/tasksControl';
 import { useState } from 'react';
-import { TaskTable } from '@/components/tasks/tasksTable';
-import { TaskBoard } from '@/components/tasks/tasksBoard';
 import { TASKS_DUMMY } from '@/data/tasksStats';
 import { TASKS_LIST_DUMMY } from '@/data/tasksList';
+import { TaskHeader } from '@/layouts/tasks/tasksHeader';
+import { TaskStats } from '@/layouts/tasks/tasksStats';
+import { TaskControls } from '@/layouts/tasks/tasksControl';
+import { TaskTable } from '@/layouts/tasks/taskTable';
+import { TaskBoard } from '@/layouts/tasks/tasksBoard';
 
 interface TasksProps extends Page {
     auth: {

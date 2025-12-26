@@ -1,7 +1,7 @@
-import { ProjectCard } from "@/components/projects/ProjectCard";
-import { ProjectControls } from "@/components/projects/ProjectControls";
-import { ProjectHeader } from "@/components/projects/ProjectHeader";
-import { ProjectStats } from "@/components/projects/ProjectStats";
+import { ProjectCard } from "@/layouts/projects/ProjectCard";
+import { ProjectControls } from "@/layouts/projects/ProjectControls";
+import { ProjectHeader } from "@/layouts/projects/ProjectHeader";
+import { ProjectStats } from "@/layouts/projects/ProjectStats";
 import { PROJECTS_DUMMY } from "@/data/project";
 import AppLayout from "@/layouts/app-layout";
 import { Head, usePage } from "@inertiajs/react";

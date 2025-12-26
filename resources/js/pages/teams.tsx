@@ -4,13 +4,13 @@ import { PERMISSION_CARDS } from '@/data/permission-data';
 import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import { Page } from '@inertiajs/core';
-import { TeamStats } from '@/components/team/teamStat';
-import { MemberCard } from '@/components/team/memberCard';
-import { TeamTable } from '@/components/team/teamMember';
+import { TeamStats } from '@/layouts/team/teamStat';
+import { MemberCard } from '@/layouts/team/memberCard';
+import { TeamTable } from '@/layouts/team/teamMember';
 import { useState } from 'react';
 import { TEAMS_DUMMY } from '@/data/team';
-import { TeamHeader } from '@/components/team/teamHeader';
-import { TeamControls } from '@/components/team/teamControl';
+import { TeamHeader } from '@/layouts/team/teamHeader';
+import { TeamControls } from '@/layouts/team/teamControl';
 interface TeamsProps extends Page {
     auth: {
         user: {
@@ -77,17 +77,17 @@ export default function Teams() {
                 <TeamStats members={TEAMS_DUMMY} />
 
                 {/* 3. Controls (Search & View Toggle) */}
-                <TeamControls 
+                {/* <TeamControls 
                     viewMode={viewMode}
                     setViewMode={setViewMode}
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
                     selectedWorkspace={selectedWorkspace}
                     setSelectedWorkspace={setSelectedWorkspace}
-                />
+                /> */}
 
                 {/* 4. Main Content (Table atau Grid) */}
-                <div className="mt-4">
+                {/* <div className="mt-4">
                     {viewMode === 'grid' ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-in fade-in duration-500">
                             {filteredMembers.map(member => (
@@ -97,16 +97,16 @@ export default function Teams() {
                     ) : (
                         <TeamTable members={filteredMembers} />
                     )}
-                </div>
+                </div> */}
 
                 {/* 5. Empty State */}
-                {filteredMembers.length === 0 && (
+                {/* {filteredMembers.length === 0 && (
                     <div className="text-center py-20 bg-card rounded-[32px] border border-dashed border-border mt-8">
                         <p className="text-muted-foreground italic font-medium">
                             No team members found matching your search.
                         </p>
                     </div>
-                )}
+                )} */}
             </div>
         </AppLayout>
     );

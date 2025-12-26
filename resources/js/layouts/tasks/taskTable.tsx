@@ -3,6 +3,7 @@ import { MoreVertical, Calendar, MessageSquare, Paperclip, Building2, FolderKanb
 import { Badge } from "@/components/ui/badge";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 
+
 export const TaskTable = ({ tasks, getStatusInfo, getPriorityInfo }: any) => {
     return (
         <div className="bg-card rounded-[32px] border border-border shadow-sm overflow-hidden">

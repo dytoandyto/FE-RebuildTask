@@ -1,6 +1,6 @@
+import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { Badge } from "@/components/ui/badge";
 import { MessageSquare, MoreVertical, Paperclip } from "lucide-react";
-import { ImageWithFallback } from "../ImageWithFallback";
-import { Badge } from "../ui/badge";
 
 export const TaskBoard = ({ tasks, getPriorityInfo, getStatusInfo }: any) => {
     const columns = ['todo', 'in-progress', 'completed'];
