@@ -5,6 +5,7 @@ import { ProjectControls } from "@/layouts/projects/ProjectControls";
 import { ProjectCard } from "@/layouts/projects/ProjectCard";
 import DataTableBase from "@/components/DataTableBase";
 import { getProjectColumns } from "@/layouts/projects/ProjectColumns";
+import { ProjectFilters } from "@/layouts/projects/ProjectFilters";
 import { PROJECTS_DUMMY } from "@/data/project";
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
@@ -12,11 +13,21 @@ import { useState } from "react";
 export default function Projects() {
     const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
     const [searchQuery, setSearchQuery] = useState("");
+    const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
+    const [selectedPriority, setSelectedPriority] = useState<string[]>([]);
+    const [showFilters, setShowFilters] = useState(false);
 
-    const filteredProjects = PROJECTS_DUMMY.filter((project) =>
+    const filteredProjects = PROJECTS_DUMMY.filter((project) => {
+    const matchesSearch =
         project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+        project.description.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    // Logic Multi-Select
+    const matchesStatus = selectedStatus.length === 0 || selectedStatus.includes(project.status);
+    const matchesPriority = selectedPriority.length === 0 || selectedPriority.includes(project.priority);
+
+    return matchesSearch && matchesStatus && matchesPriority;
+    });
 
     const statsSummary = {
         totalProjects: PROJECTS_DUMMY.length,
@@ -44,6 +55,19 @@ export default function Projects() {
                     setViewMode={setViewMode}
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
+                    onFilterClick={() => setShowFilters(!showFilters)}
+                />
+
+                <ProjectFilters 
+                    isVisible={showFilters}
+                    selectedStatus={selectedStatus}
+                    setSelectedStatus={setSelectedStatus}
+                    selectedPriority={selectedPriority}
+                    setSelectedPriority={setSelectedPriority}
+                    onReset={() => {
+                        setSelectedStatus([]);
+                        setSelectedPriority([]);
+                    }}
                 />
 
                 <div className="mt-2">
