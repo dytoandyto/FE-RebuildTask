@@ -17,11 +17,22 @@ export const TaskFilters = ({
     selectedPriority,
     setSelectedPriority,
     onReset
-}: TaskFiltersProps) => {
+}: any) => {
     if (!isVisible) return null;
 
-    const statuses = ['all', 'todo', 'in-progress', 'completed', 'overdue'];
-    const priorities = ['all', 'low', 'medium', 'high'];
+    const statuses = ['todo', 'in-progress', 'completed', 'overdue']; // Hapus 'all' dari list karena defaultnya []
+    const priorities = ['low', 'medium', 'high'];
+
+    // Fungsi Helper Toggle
+    const toggleFilter = (currentArray: string[], value: string, setter: (val: string[]) => void) => {
+        if (currentArray.includes(value)) {
+            // Kalau sudah ada, hapus (unselect)
+            setter(currentArray.filter(item => item !== value));
+        } else {
+            // Kalau belum ada, tambahkan (select)
+            setter([...currentArray, value]);
+        }
+    };
 
     return (
         <div className="bg-card border border-border rounded-[28px] p-6 mb-6 animate-in slide-in-from-top-4 duration-300 shadow-sm">
@@ -29,20 +40,20 @@ export const TaskFilters = ({
                 
                 {/* Status Filter */}
                 <div>
-                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">Filter by Status</h4>
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">Filter by Status (Multi)</h4>
                     <div className="flex flex-wrap gap-2">
                         {statuses.map((status) => (
                             <button
                                 key={status}
-                                onClick={() => setSelectedStatus(status)}
+                                onClick={() => toggleFilter(selectedStatus, status, setSelectedStatus)}
                                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
-                                    selectedStatus === status 
-                                    ? 'bg-sada-red border-sada-red text-white shadow-md scale-105' 
-                                    : 'bg-muted/50 border-transparent text-muted-foreground hover:border-border hover:bg-muted'
+                                    selectedStatus.includes(status) 
+                                    ? 'bg-sada-red border-sada-red text-white shadow-md' 
+                                    : 'bg-muted/50 border-transparent text-muted-foreground hover:border-border'
                                 }`}
                             >
                                 <div className="flex items-center gap-2 uppercase tracking-tighter">
-                                    {selectedStatus === status && <Check className="size-3" />}
+                                    {selectedStatus.includes(status) && <Check className="size-3" />}
                                     {status.replace('-', ' ')}
                                 </div>
                             </button>
@@ -52,20 +63,20 @@ export const TaskFilters = ({
 
                 {/* Priority Filter */}
                 <div>
-                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">Filter by Priority</h4>
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">Filter by Priority (Multi)</h4>
                     <div className="flex flex-wrap gap-2">
                         {priorities.map((priority) => (
                             <button
                                 key={priority}
-                                onClick={() => setSelectedPriority(priority)}
+                                onClick={() => toggleFilter(selectedPriority, priority, setSelectedPriority)}
                                 className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
-                                    selectedPriority === priority 
-                                    ? 'bg-foreground border-foreground text-background shadow-md scale-105' 
-                                    : 'bg-muted/50 border-transparent text-muted-foreground hover:border-border hover:bg-muted'
+                                    selectedPriority.includes(priority) 
+                                    ? 'bg-foreground border-foreground text-background shadow-md' 
+                                    : 'bg-muted/50 border-transparent text-muted-foreground hover:border-border'
                                 }`}
                             >
                                 <div className="flex items-center gap-2 uppercase tracking-tighter">
-                                    {selectedPriority === priority && <Check className="size-3" />}
+                                    {selectedPriority.includes(priority) && <Check className="size-3" />}
                                     {priority}
                                 </div>
                             </button>
@@ -73,17 +84,13 @@ export const TaskFilters = ({
                     </div>
                 </div>
 
-                {/* Footer / Reset Action */}
+                {/* Footer */}
                 <div className="pt-4 border-t border-border/50 flex justify-between items-center">
                     <p className="text-[10px] text-muted-foreground italic font-medium">
-                        Showing filtered results based on your selection
+                        You can select multiple options. If none are selected, showing all.
                     </p>
-                    <button 
-                        onClick={onReset}
-                        className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-sada-red hover:opacity-70 transition-opacity"
-                    >
-                        <X className="size-3" />
-                        Clear All Filters
+                    <button onClick={onReset} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-sada-red hover:opacity-70 transition-opacity">
+                        <X className="size-3" /> Clear All Filters
                     </button>
                 </div>
             </div>

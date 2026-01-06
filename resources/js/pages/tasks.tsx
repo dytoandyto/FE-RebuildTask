@@ -13,26 +13,30 @@ import { TaskFilters } from '@/layouts/tasks/tasksfilter';
 export default function Tasks() {
     const [viewMode, setViewMode] = useState<'list' | 'board'>('list');
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedStatus, setSelectedStatus] = useState("all");
-    const [selectedPriority, setSelectedPriority] = useState("all");
+    const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
+    const [selectedPriority, setSelectedPriority] = useState<string[]>([]);
     const [showFilters, setShowFilters] = useState(false);
     const [selectedTask, setSelectedTask] = useState<any>(null);
 
-    // --- LOGIKA FILTERING (CLIENT SIDE) ---
+        // 2. Update Logika Filtering
     const filteredTasks = TASKS_LIST_DUMMY.filter((task) => {
-        // Filter Search
         const matchesSearch =
             task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             task.project.toLowerCase().includes(searchQuery.toLowerCase());
         
-        // Filter Status
-        const matchesStatus = selectedStatus === "all" || task.status === selectedStatus;
-        
-        // Filter Priority
-        const matchesPriority = selectedPriority === "all" || task.priority === selectedPriority;
+        // Jika array kosong, berarti "All" (tampilkan semua)
+        // Jika tidak kosong, cek apakah status task ada di dalam daftar pilihan user
+        const matchesStatus = selectedStatus.length === 0 || selectedStatus.includes(task.status);
+        const matchesPriority = selectedPriority.length === 0 || selectedPriority.includes(task.priority);
 
         return matchesSearch && matchesStatus && matchesPriority;
     });
+
+    // 3. Update Fungsi Reset
+    const handleReset = () => {
+        setSelectedStatus([]);
+        setSelectedPriority([]);
+    };
 
     const getStatusInfo = (status: string) => {
         const config: any = {
@@ -64,7 +68,10 @@ export default function Tasks() {
                     viewMode={viewMode} setViewMode={setViewMode}
                     searchQuery={searchQuery} setSearchQuery={setSearchQuery}
                     showFilters={showFilters} setShowFilters={setShowFilters}
-                    activeFiltersCount={(selectedStatus !== 'all' ? 1 : 0) + (selectedPriority !== 'all' ? 1 : 0)}
+                    activeFiltersCount={
+                    (selectedStatus.length > 0 ? 1 : 0) +
+                    (selectedPriority.length > 0 ? 1 : 0)
+                    }
                 />
 
                 {/* --- SEKSI FILTER AKTIF --- */}
@@ -75,8 +82,8 @@ export default function Tasks() {
                     selectedPriority={selectedPriority}
                     setSelectedPriority={setSelectedPriority}
                     onReset={() => {
-                        setSelectedStatus('all');
-                        setSelectedPriority('all');
+                        setSelectedStatus([]);
+                        setSelectedPriority([]);
                     }}
                 />
 
