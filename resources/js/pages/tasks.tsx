@@ -8,6 +8,7 @@ import { TaskStats } from '@/layouts/tasks/tasksStats';
 import { TaskControls } from '@/layouts/tasks/tasksControl';
 import { TaskTable } from '@/layouts/tasks/taskTable';
 import { TaskBoard } from '@/layouts/tasks/tasksBoard';
+import { TaskFilters } from '@/layouts/tasks/tasksfilter';
 
 export default function Tasks() {
     const [viewMode, setViewMode] = useState<'list' | 'board'>('list');
@@ -15,15 +16,19 @@ export default function Tasks() {
     const [selectedStatus, setSelectedStatus] = useState("all");
     const [selectedPriority, setSelectedPriority] = useState("all");
     const [showFilters, setShowFilters] = useState(false);
-    
-    // State untuk Modal Detail
     const [selectedTask, setSelectedTask] = useState<any>(null);
 
+    // --- LOGIKA FILTERING (CLIENT SIDE) ---
     const filteredTasks = TASKS_LIST_DUMMY.filter((task) => {
+        // Filter Search
         const matchesSearch =
             task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             task.project.toLowerCase().includes(searchQuery.toLowerCase());
+        
+        // Filter Status
         const matchesStatus = selectedStatus === "all" || task.status === selectedStatus;
+        
+        // Filter Priority
         const matchesPriority = selectedPriority === "all" || task.priority === selectedPriority;
 
         return matchesSearch && matchesStatus && matchesPriority;
@@ -51,7 +56,7 @@ export default function Tasks() {
     return (
         <AppLayout>
             <Head title="Tasks" />
-            <div className="mx-auto w-full max-w-[1600px] flex flex-col gap-8 p-6 md:p-10">
+            <div className="mx-auto w-full max-w-[1600px] flex flex-col gap-8 p-6 md:p-10 transition-all">
                 <TaskHeader onAction={() => { }} />
                 <TaskStats taskData={TASKS_DUMMY} />
                 
@@ -62,13 +67,26 @@ export default function Tasks() {
                     activeFiltersCount={(selectedStatus !== 'all' ? 1 : 0) + (selectedPriority !== 'all' ? 1 : 0)}
                 />
 
+                {/* --- SEKSI FILTER AKTIF --- */}
+                <TaskFilters
+                    isVisible={showFilters}
+                    selectedStatus={selectedStatus}
+                    setSelectedStatus={setSelectedStatus}
+                    selectedPriority={selectedPriority}
+                    setSelectedPriority={setSelectedPriority}
+                    onReset={() => {
+                        setSelectedStatus('all');
+                        setSelectedPriority('all');
+                    }}
+                />
+
                 <div className="mt-2">
                     {viewMode === "list" ? (
                         <TaskTable
                             tasks={filteredTasks}
                             getStatusInfo={getStatusInfo}
                             getPriorityInfo={getPriorityInfo}
-                            onRowClick={(task: any) => setSelectedTask(task)} // Kirim fungsi klik ke tabel
+                            onRowClick={(task: any) => setSelectedTask(task)}
                         />
                     ) : (
                         <TaskBoard
@@ -81,34 +99,25 @@ export default function Tasks() {
 
                 {filteredTasks.length === 0 && (
                     <div className="text-center py-20 bg-card rounded-[32px] border border-dashed border-border mt-4">
-                        <p className="text-muted-foreground font-medium italic">No tasks found.</p>
+                        <p className="text-muted-foreground font-medium italic">
+                            No tasks found matching your filters.
+                        </p>
                     </div>
                 )}
             </div>
 
-            {/* Modal Detail Sederhana (Contoh) */}
+            {/* Modal Detail (Placeholder) */}
             {selectedTask && (
-                <div className="fixed inset-0 z-[99] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={() => setSelectedTask(null)}>
-                    <div className="bg-neutral-900 border border-border w-full max-w-lg rounded-[32px] p-8 shadow-2xl animate-in zoom-in duration-300" onClick={e => e.stopPropagation()}>
-                        <div className="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 className="text-2xl font-bold text-white italic">{selectedTask.title}</h3>
-                                <p className="text-sada-red font-bold text-xs uppercase mt-1">{selectedTask.project}</p>
-                            </div>
-                            <button onClick={() => setSelectedTask(null)} className="text-neutral-500 hover:text-white text-xl">&times;</button>
-                        </div>
-                        <div className="space-y-4">
-                            <div className="flex justify-between border-b border-white/5 py-2">
-                                <span className="text-neutral-500 text-sm font-bold uppercase">Status</span>
-                                <span className={`text-[10px] font-black uppercase px-3 py-1 rounded-full ${getStatusInfo(selectedTask.status).class}`}>
-                                    {getStatusInfo(selectedTask.status).label}
-                                </span>
-                            </div>
-                            <div className="py-2">
-                                <span className="text-neutral-500 text-sm font-bold uppercase block mb-2">Description</span>
-                                <p className="text-neutral-300 text-sm leading-relaxed">{selectedTask.description || 'No description provided.'}</p>
-                            </div>
-                        </div>
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setSelectedTask(null)}>
+                    <div className="bg-card border border-border p-8 rounded-[32px] max-w-md w-full" onClick={e => e.stopPropagation()}>
+                        <h2 className="text-white font-bold text-xl italic">{selectedTask.title}</h2>
+                        <p className="text-muted-foreground mt-4">{selectedTask.description || "No description available."}</p>
+                        <button 
+                            className="mt-6 w-full py-3 bg-sada-red text-white font-bold rounded-xl"
+                            onClick={() => setSelectedTask(null)}
+                        >
+                            Close Detail
+                        </button>
                     </div>
                 </div>
             )}
