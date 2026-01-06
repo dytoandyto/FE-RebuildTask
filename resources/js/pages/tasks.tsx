@@ -1,6 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
 import { Head, usePage } from '@inertiajs/react';
-import { Page } from '@inertiajs/core';
 import { useState } from 'react';
 import { TASKS_DUMMY } from '@/data/tasksStats';
 import { TASKS_LIST_DUMMY } from '@/data/tasksList';
@@ -16,8 +15,10 @@ export default function Tasks() {
     const [selectedStatus, setSelectedStatus] = useState("all");
     const [selectedPriority, setSelectedPriority] = useState("all");
     const [showFilters, setShowFilters] = useState(false);
+    
+    // State untuk Modal Detail
+    const [selectedTask, setSelectedTask] = useState<any>(null);
 
-    // --- LOGIKA FILTERING (CLIENT SIDE) ---
     const filteredTasks = TASKS_LIST_DUMMY.filter((task) => {
         const matchesSearch =
             task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -28,7 +29,6 @@ export default function Tasks() {
         return matchesSearch && matchesStatus && matchesPriority;
     });
 
-    // --- HELPER STYLING (Biar seragam antara Table & Board) ---
     const getStatusInfo = (status: string) => {
         const config: any = {
             todo: { label: "To Do", class: "bg-muted text-muted-foreground border-border", dotColor: "bg-slate-400" },
@@ -68,6 +68,7 @@ export default function Tasks() {
                             tasks={filteredTasks}
                             getStatusInfo={getStatusInfo}
                             getPriorityInfo={getPriorityInfo}
+                            onRowClick={(task: any) => setSelectedTask(task)} // Kirim fungsi klik ke tabel
                         />
                     ) : (
                         <TaskBoard
@@ -84,6 +85,33 @@ export default function Tasks() {
                     </div>
                 )}
             </div>
+
+            {/* Modal Detail Sederhana (Contoh) */}
+            {selectedTask && (
+                <div className="fixed inset-0 z-[99] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={() => setSelectedTask(null)}>
+                    <div className="bg-neutral-900 border border-border w-full max-w-lg rounded-[32px] p-8 shadow-2xl animate-in zoom-in duration-300" onClick={e => e.stopPropagation()}>
+                        <div className="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 className="text-2xl font-bold text-white italic">{selectedTask.title}</h3>
+                                <p className="text-sada-red font-bold text-xs uppercase mt-1">{selectedTask.project}</p>
+                            </div>
+                            <button onClick={() => setSelectedTask(null)} className="text-neutral-500 hover:text-white text-xl">&times;</button>
+                        </div>
+                        <div className="space-y-4">
+                            <div className="flex justify-between border-b border-white/5 py-2">
+                                <span className="text-neutral-500 text-sm font-bold uppercase">Status</span>
+                                <span className={`text-[10px] font-black uppercase px-3 py-1 rounded-full ${getStatusInfo(selectedTask.status).class}`}>
+                                    {getStatusInfo(selectedTask.status).label}
+                                </span>
+                            </div>
+                            <div className="py-2">
+                                <span className="text-neutral-500 text-sm font-bold uppercase block mb-2">Description</span>
+                                <p className="text-neutral-300 text-sm leading-relaxed">{selectedTask.description || 'No description provided.'}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </AppLayout >
     );
 }

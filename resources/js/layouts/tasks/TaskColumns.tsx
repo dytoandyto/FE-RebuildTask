@@ -7,13 +7,15 @@ export const getTaskColumns = (getStatusInfo: any, getPriorityInfo: any) => [
     {
         data: 'title',
         title: 'Task Details',
-        width: '40%', // Kunci lebar kolom detail
-        className: 'text-left align-middle px-6',
+        width: '40%',
+        className: 'text-left align-middle px-6 group', // Tambahin class 'group' di sini
         render: (data: any, type: any, row: any) => `
-            <div class="flex flex-col gap-1 py-2">
-                <span class="font-bold text-white italic text-sm">${row.title}</span>
+            <div class="flex flex-col gap-1 py-2 cursor-pointer">
+                <span class="font-bold text-white italic text-sm transition-colors duration-200 group-hover:text-red-500">
+                    ${row.title}
+                </span>
                 <div class="flex flex-col mt-1">
-                    <span class="text-[10px] font-bold text-red-500 uppercase tracking-wider">${row.project}</span>
+                    <span class="text-[10px] font-bold text-red-500/80 uppercase tracking-wider">${row.project}</span>
                     <span class="text-[9px] font-medium text-neutral-500 uppercase tracking-tighter">${row.workspace}</span>
                 </div>
             </div>
