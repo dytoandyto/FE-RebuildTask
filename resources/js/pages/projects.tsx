@@ -1,24 +1,34 @@
-import { ProjectCard } from "@/layouts/projects/ProjectCard";
-import { ProjectControls } from "@/layouts/projects/ProjectControls";
+import AppLayout from "@/layouts/app-layout";
 import { ProjectHeader } from "@/layouts/projects/ProjectHeader";
 import { ProjectStats } from "@/layouts/projects/ProjectStats";
+import { ProjectControls } from "@/layouts/projects/ProjectControls";
+import { ProjectCard } from "@/layouts/projects/ProjectCard";
+import DataTableBase from "@/components/DataTableBase";
+import { getProjectColumns } from "@/layouts/projects/ProjectColumns";
+import { ProjectFilters } from "@/layouts/projects/ProjectFilters";
 import { PROJECTS_DUMMY } from "@/data/project";
-import AppLayout from "@/layouts/app-layout";
-import { Head, usePage } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import { useState } from "react";
 
 export default function Projects() {
-    const { props } = usePage<any>();
     const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
     const [searchQuery, setSearchQuery] = useState("");
+    const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
+    const [selectedPriority, setSelectedPriority] = useState<string[]>([]);
+    const [showFilters, setShowFilters] = useState(false);
 
-    // 1. Logika Filtering
-    const filteredProjects = PROJECTS_DUMMY.filter((project) =>
+    const filteredProjects = PROJECTS_DUMMY.filter((project) => {
+    const matchesSearch =
         project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+        project.description.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    // Logic Multi-Select
+    const matchesStatus = selectedStatus.length === 0 || selectedStatus.includes(project.status);
+    const matchesPriority = selectedPriority.length === 0 || selectedPriority.includes(project.priority);
 
-    // 2. Kalkulasi untuk ProjectStats (Opsional jika ingin otomatis)
+    return matchesSearch && matchesStatus && matchesPriority;
+    });
+
     const statsSummary = {
         totalProjects: PROJECTS_DUMMY.length,
         totalInProgress: PROJECTS_DUMMY.filter(p => p.status === 'in-progress').length,
@@ -31,7 +41,6 @@ export default function Projects() {
             <Head title="Projects" />
             <div className="mx-auto w-full max-w-[1600px] flex flex-col gap-8 p-6 md:p-10 transition-all">
                 
-                {/* Header & Stats */}
                 <ProjectHeader />
                 
                 <ProjectStats 
@@ -41,33 +50,56 @@ export default function Projects() {
                     totalOverdue={statsSummary.totalOverdue}
                 />
 
-                {/* Controls */}
                 <ProjectControls
                     viewMode={viewMode}
                     setViewMode={setViewMode}
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
+                    onFilterClick={() => setShowFilters(!showFilters)}
                 />
 
-                {/* Cards Grid/List Container */}
-                <div className={
-                    viewMode === 'grid' 
-                    ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" 
-                    : "flex flex-col gap-4"
-                }>
-                    {filteredProjects.map((project) => (
-                        <ProjectCard
-                            key={project.id}
-                            project={project}
-                            viewMode={viewMode}
-                        />
-                    ))}
+                <ProjectFilters 
+                    isVisible={showFilters}
+                    selectedStatus={selectedStatus}
+                    setSelectedStatus={setSelectedStatus}
+                    selectedPriority={selectedPriority}
+                    setSelectedPriority={setSelectedPriority}
+                    onReset={() => {
+                        setSelectedStatus([]);
+                        setSelectedPriority([]);
+                    }}
+                />
+
+                <div className="mt-2">
+                    {viewMode === 'list' ? (
+                        <div className="animate-in fade-in zoom-in-95 duration-500">
+                            <DataTableBase 
+                                data={filteredProjects}
+                                columns={getProjectColumns()}
+                                options={{
+                                    pageLength: 10,
+                                    createdRow: (row: any) => {
+                                        row.classList.add('cursor-pointer');
+                                    }
+                                }}
+                            />
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 animate-in fade-in zoom-in-95 duration-500">
+                            {filteredProjects.map((project) => (
+                                <ProjectCard
+                                    key={project.id}
+                                    project={project}
+                                    viewMode={viewMode}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
 
-                {/* Empty State jika hasil filter kosong */}
                 {filteredProjects.length === 0 && (
-                    <div className="text-center py-20 bg-card rounded-[32px] border border-dashed border-border">
-                        <p className="text-muted-foreground font-medium">No projects found matching "{searchQuery}"</p>
+                    <div className="text-center py-20 bg-card rounded-[32px] border border-dashed border-border mt-4">
+                        <p className="text-muted-foreground font-medium italic">No projects found matching "{searchQuery}"</p>
                     </div>
                 )}
             </div>

@@ -1,6 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
 import { Head, usePage } from '@inertiajs/react';
-import { Page } from '@inertiajs/core';
 import { useState } from 'react';
 import { TASKS_DUMMY } from '@/data/tasksStats';
 import { TASKS_LIST_DUMMY } from '@/data/tasksList';
@@ -9,44 +8,36 @@ import { TaskStats } from '@/layouts/tasks/tasksStats';
 import { TaskControls } from '@/layouts/tasks/tasksControl';
 import { TaskTable } from '@/layouts/tasks/taskTable';
 import { TaskBoard } from '@/layouts/tasks/tasksBoard';
-
-interface TasksProps extends Page {
-    auth: {
-        user: {
-            name: string;
-            email: string;
-            company?: { name: string };
-            roles?: string[];
-        };
-        permissions: string[];
-    };
-    [key: string]: unknown;
-}
+import { TaskFilters } from '@/layouts/tasks/tasksfilter';
 
 export default function Tasks() {
-    const { props } = usePage<TasksProps>();
-    const { auth } = props;
-
-    // --- HANYA SATU KALI DEKLARASI STATE ---
     const [viewMode, setViewMode] = useState<'list' | 'board'>('list');
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedStatus, setSelectedStatus] = useState("all");
-    const [selectedPriority, setSelectedPriority] = useState("all");
+    const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
+    const [selectedPriority, setSelectedPriority] = useState<string[]>([]);
     const [showFilters, setShowFilters] = useState(false);
+    const [selectedTask, setSelectedTask] = useState<any>(null);
 
-    // --- LOGIKA FILTERING ---
+        // 2. Update Logika Filtering
     const filteredTasks = TASKS_LIST_DUMMY.filter((task) => {
         const matchesSearch =
             task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             task.project.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesStatus = selectedStatus === "all" || task.status === selectedStatus;
-        const matchesPriority = selectedPriority === "all" || task.priority === selectedPriority;
-        const description = task.description.toLowerCase();
+        
+        // Jika array kosong, berarti "All" (tampilkan semua)
+        // Jika tidak kosong, cek apakah status task ada di dalam daftar pilihan user
+        const matchesStatus = selectedStatus.length === 0 || selectedStatus.includes(task.status);
+        const matchesPriority = selectedPriority.length === 0 || selectedPriority.includes(task.priority);
 
         return matchesSearch && matchesStatus && matchesPriority;
     });
 
-    // --- HELPER STYLING ---
+    // 3. Update Fungsi Reset
+    const handleReset = () => {
+        setSelectedStatus([]);
+        setSelectedPriority([]);
+    };
+
     const getStatusInfo = (status: string) => {
         const config: any = {
             todo: { label: "To Do", class: "bg-muted text-muted-foreground border-border", dotColor: "bg-slate-400" },
@@ -69,45 +60,40 @@ export default function Tasks() {
     return (
         <AppLayout>
             <Head title="Tasks" />
-
             <div className="mx-auto w-full max-w-[1600px] flex flex-col gap-8 p-6 md:p-10 transition-all">
-                {/* 1. Header */}
                 <TaskHeader onAction={() => { }} />
-
-                {/* 2. Stats - Kirim TASKS_DUMMY agar angka tidak 0 */}
                 <TaskStats taskData={TASKS_DUMMY} />
-
-                {/* 3. Controls */}
+                
                 <TaskControls
-                    viewMode={viewMode}
-                    setViewMode={setViewMode}
-                    searchQuery={searchQuery}
-                    setSearchQuery={setSearchQuery}
-                    showFilters={showFilters}
-                    setShowFilters={setShowFilters}
-                    activeFiltersCount={(selectedStatus !== 'all' ? 1 : 0) + (selectedPriority !== 'all' ? 1 : 0)}
+                    viewMode={viewMode} setViewMode={setViewMode}
+                    searchQuery={searchQuery} setSearchQuery={setSearchQuery}
+                    showFilters={showFilters} setShowFilters={setShowFilters}
+                    activeFiltersCount={
+                    (selectedStatus.length > 0 ? 1 : 0) +
+                    (selectedPriority.length > 0 ? 1 : 0)
+                    }
                 />
 
-                {/* 4. Filters */}
-                {/* <TaskFilters
+                {/* --- SEKSI FILTER AKTIF --- */}
+                <TaskFilters
                     isVisible={showFilters}
                     selectedStatus={selectedStatus}
                     setSelectedStatus={setSelectedStatus}
                     selectedPriority={selectedPriority}
                     setSelectedPriority={setSelectedPriority}
                     onReset={() => {
-                        setSelectedStatus('all');
-                        setSelectedPriority('all');
+                        setSelectedStatus([]);
+                        setSelectedPriority([]);
                     }}
-                /> */}
+                />
 
-                {/* 5. Main Content */}
                 <div className="mt-2">
                     {viewMode === "list" ? (
                         <TaskTable
                             tasks={filteredTasks}
                             getStatusInfo={getStatusInfo}
                             getPriorityInfo={getPriorityInfo}
+                            onRowClick={(task: any) => setSelectedTask(task)}
                         />
                     ) : (
                         <TaskBoard
@@ -118,7 +104,6 @@ export default function Tasks() {
                     )}
                 </div>
 
-                {/* 6. Empty State */}
                 {filteredTasks.length === 0 && (
                     <div className="text-center py-20 bg-card rounded-[32px] border border-dashed border-border mt-4">
                         <p className="text-muted-foreground font-medium italic">
@@ -127,6 +112,22 @@ export default function Tasks() {
                     </div>
                 )}
             </div>
+
+            {/* Modal Detail (Placeholder) */}
+            {selectedTask && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setSelectedTask(null)}>
+                    <div className="bg-card border border-border p-8 rounded-[32px] max-w-md w-full" onClick={e => e.stopPropagation()}>
+                        <h2 className="text-white font-bold text-xl italic">{selectedTask.title}</h2>
+                        <p className="text-muted-foreground mt-4">{selectedTask.description || "No description available."}</p>
+                        <button 
+                            className="mt-6 w-full py-3 bg-sada-red text-white font-bold rounded-xl"
+                            onClick={() => setSelectedTask(null)}
+                        >
+                            Close Detail
+                        </button>
+                    </div>
+                </div>
+            )}
         </AppLayout >
     );
 }
