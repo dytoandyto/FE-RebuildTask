@@ -8,8 +8,15 @@ export const TaskTable = ({ tasks, getStatusInfo, getPriorityInfo, onRowClick }:
             columns={getTaskColumns(getStatusInfo, getPriorityInfo)}
             options={{
                 onRowClick: onRowClick, // Pass fungsi klik ke Base
-                pageLength: 2,
-                // Tambahin efek hover biar user tau bisa diklik
+                pageLength: 5,
+                paginate: {
+                previous: "Previous",
+                next: "Next",
+                // Kosongkan karakter anehnya
+                first: "First",
+                last: "Last"
+            },
+            info: "Showing _START_ to _END_ of _TOTAL_ entries",
                 createdRow: (row: any) => {
                     row.classList.add('cursor-pointer', 'transition-all', 'hover:bg-white/[0.02]');
                 }

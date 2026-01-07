@@ -78,6 +78,13 @@ export default function Projects() {
                                 columns={getProjectColumns()}
                                 options={{
                                     pageLength: 10,
+                                    paginate: {
+                                    previous: "Previous",
+                                    next: "Next",
+                                    // Kosongkan karakter anehnya
+                                    first: "First",
+                                    last: "Last"
+                                },
                                     createdRow: (row: any) => {
                                         row.classList.add('cursor-pointer');
                                     }
