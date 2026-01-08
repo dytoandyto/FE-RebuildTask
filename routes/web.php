@@ -39,6 +39,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('invoices', function () {
         return Inertia::render('invoices');
     })->name('invoices');
+
+    Route::get('task-members', function () {
+        return Inertia::render('task-members');
+    })->name('task-members');
+    Route::get('timesheet-members', function () {
+        return Inertia::render('timesheet-members');
+    })->name('timesheet-members');
 });
 
 Route::middleware(['auth', 'role:super-admin'])->group(function () {

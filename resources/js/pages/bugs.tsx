@@ -35,7 +35,7 @@ export default function Bugs() {
     const activeCount = PERMISSION_CARDS.filter(p => hasPermission(p.key)).length;
 
     return (
-       <AppLayout>
+       <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Bugs" />
             
             <div className="mx-auto w-full max-w-[1600px] flex flex-col gap-0 p-6 md:p-10 transition-all">

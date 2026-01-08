@@ -1,39 +1,30 @@
 import ReactDOMServer from 'react-dom/server';
-import { MoreVertical, FolderKanban } from "lucide-react";
+import { MoreVertical, FolderKanban, Building2, LayoutGrid } from "lucide-react";
 
 export const getTaskColumns = (getStatusInfo: any, getPriorityInfo: any) => [
     {
         data: 'title',
-        title: 'Task Details',
-        width: '25%',
+        title: 'Task Name',
+        width: '20%',
         className: 'text-left align-middle px-6 group',
         render: (data: any, type: any, row: any) => {
             const folderIcon = ReactDOMServer.renderToString(
-                <div className="size-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg shadow-purple-900/20">
-                    <FolderKanban className="size-5 text-white" />
+                <div className="size-9 flex items-center justify-center rounded-xl bg-gradient-to-br from-sada-red to-sada-red-hover shadow-lg shadow-sada-red/10">
+                    <FolderKanban className="size-4 text-white" />
                 </div>
             );
-
-            // Logic Badge Status di bawah judul
-            const statusInfo = getStatusInfo(row.status);
 
             return `
                 <div class="flex items-center gap-4 py-2 cursor-pointer">
                     ${folderIcon}
-                    <div class="flex flex-col gap-1">
-                        <span class="font-bold text-neutral-200 text-sm group-hover:text-red-500 transition-colors uppercase italic leading-none">
+                    <div class="flex flex-col gap-0.5">
+                        <span class="font-bold text-foreground text-sm group-hover:text-sada-red transition-colors uppercase leading-tight">
                             ${row.title}
                         </span>
-                        
-                        <div class="inline-flex items-center px-2 py-0.5 rounded-md bg-blue-500/10 border border-blue-500/20 w-fit">
-                            <span class="text-[8px] font-black text-blue-400 uppercase tracking-tighter">
+                        <div class="inline-flex items-center px-2 py-0.5 rounded-md bg-muted border border-border w-fit">
+                            <span class="text-[8px] font-black text-muted-foreground uppercase tracking-tighter">
                                 ${row.status === 'completed' ? 'COMPLETED' : 'IN PROGRESS'}
                             </span>
-                        </div>
-
-                        <div class="flex flex-col">
-                            <span class="text-[9px] font-black text-red-500/80 uppercase tracking-wider leading-tight">${row.project}</span>
-                            <span class="text-[8px] font-medium text-neutral-500 uppercase tracking-tighter leading-tight">${row.workspace}</span>
                         </div>
                     </div>
                 </div>
@@ -41,15 +32,22 @@ export const getTaskColumns = (getStatusInfo: any, getPriorityInfo: any) => [
         }
     },
     {
-        data: 'description',
-        title: 'Description',
-        width: '20%',
-        className: 'align-middle hidden lg:table-cell',
-        render: (data: any) => `
-            <span class="text-[11px] text-neutral-500 line-clamp-2 max-w-[200px] italic leading-relaxed">
-                ${data || '-'}
-            </span>
-        `
+        // Kolom Gabungan Workspace & Project
+        data: 'project',
+        title: '',
+        width: '18%',
+        className: 'align-middle',
+        render: (data: any, type: any, row: any) => `
+            <div class="flex flex-col gap-1">
+                <div class="flex items-center gap-1.5">
+                    <LayoutGrid size={12} class="text-sada-red/60" />
+                    <span class="text-[10px] font-black text-foreground uppercase tracking-tight">${row.project}</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <Building2 size={10} class="text-muted-foreground/50" />
+                    <span class="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">${row.workspace}</span>
+                </div>
+            </div>`
     },
     {
         data: 'progress',
@@ -60,34 +58,34 @@ export const getTaskColumns = (getStatusInfo: any, getPriorityInfo: any) => [
             const progress = data || 0;
             return `
                 <div class="flex flex-col gap-1.5 min-w-[120px]">
-                    <div class="flex justify-between items-center text-[9px] font-black uppercase tracking-widest text-neutral-500">
-                        <span>Progress</span>
-                        <span class="text-neutral-300">${progress}%</span>
+                    <div class="flex justify-between items-center text-[9px] font-black uppercase tracking-widest text-muted-foreground">
+                        <span>Completion</span>
+                        <span class="text-foreground">${progress}%</span>
                     </div>
-                    <div class="w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
-                        <div class="h-full bg-purple-500 rounded-full shadow-[0_0_10px_rgba(168,85,247,0.5)]" style="width: ${progress}%"></div>
+                    <div class="w-full h-1.5 bg-muted rounded-full overflow-hidden border border-border">
+                        <div class="h-full bg-sada-red rounded-full shadow-[0_0_8px_rgba(227,6,19,0.3)]" style="width: ${progress}%"></div>
                     </div>
                 </div>
             `;
         }
     },
     {
-        data: 'assignee', // Field object dari dummy lo
+        data: 'assignee',
         title: 'Assignee',
         width: '15%',
         className: 'align-middle',
         render: (data: any) => {
             const name = data?.name || 'Unassigned';
-            const avatar = data?.avatar || `https://ui-avatars.com/api/?name=${name}&background=random`;
+            const avatar = data?.avatar || `https://ui-avatars.com/api/?name=${name}&background=E30613&color=fff`;
             
             return `
                 <div class="flex items-center gap-3">
-                    <div class="size-10 rounded-full border-2 border-neutral-800 overflow-hidden bg-neutral-900 shadow-md">
+                    <div class="size-9 rounded-full border-2 border-border overflow-hidden bg-muted shadow-sm">
                         <img src="${avatar}" class="size-full object-cover" />
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-[11px] font-bold text-neutral-200">${name}</span>
-                        <span class="text-[9px] font-medium text-neutral-500 uppercase tracking-tighter">Team Member</span>
+                        <span class="text-[11px] font-bold text-foreground leading-tight">${name}</span>
+                        <span class="text-[9px] font-black text-muted-foreground/60 uppercase tracking-tighter">Assignee</span>
                     </div>
                 </div>
             `;
@@ -96,26 +94,28 @@ export const getTaskColumns = (getStatusInfo: any, getPriorityInfo: any) => [
     {
         data: 'priority',
         title: 'Priority',
-        width: '10%',
+        width: '12%',
         className: 'text-center align-middle',
         render: (data: any) => {
             const info = getPriorityInfo(data);
             return `
                 <div class="flex justify-center">
-                    <span class="px-3 py-1 rounded-lg bg-red-500/10 border border-red-500/20 text-red-500 font-black text-[9px] uppercase tracking-widest shadow-sm shadow-red-950/20">
-                        ${info.label}
+                    <span class="px-3 py-1 rounded-lg bg-sada-red/10 border border-sada-red/20 text-sada-red font-black text-[9px] uppercase tracking-widest">
+                        ${info?.label || data}
                     </span>
                 </div>
             `;
         }
     },
     {
-        data: null, // Kolom tombol titik tiga
+        data: null,
+        title: 'Actions',
         orderable: false,
-        className: 'text-center align-middle w-[50px]',
+        width: '5%',
+        className: 'text-right pr-6 align-middle',
         render: () => {
-            const moreIcon = ReactDOMServer.renderToString(<MoreVertical className="size-4 text-neutral-600 cursor-pointer hover:text-white transition-colors" />);
-            return `<div class="flex justify-center">${moreIcon}</div>`;
+            const moreIcon = ReactDOMServer.renderToString(<MoreVertical className="size-4 text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />);
+            return `<div class="flex justify-end">${moreIcon}</div>`;
         }
     }
 ];

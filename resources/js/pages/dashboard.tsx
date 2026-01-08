@@ -40,7 +40,7 @@ export default function Dashboard() {
     const activeCount = PERMISSION_CARDS.filter(p => hasPermission(p.key)).length;
 
     return (
-        <AppLayout>
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
 
             {/* Main Container: max-w-[1600px] menjaga layout tidak terlalu melebar di monitor ultra-wide */}

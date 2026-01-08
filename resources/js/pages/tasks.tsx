@@ -9,6 +9,8 @@ import { TaskControls } from '@/layouts/tasks/tasksControl';
 import { TaskTable } from '@/layouts/tasks/taskTable';
 import { TaskBoard } from '@/layouts/tasks/tasksBoard';
 import { TaskFilters } from '@/layouts/tasks/tasksfilter';
+import { BreadcrumbItem } from '@/types';
+import { tasks } from '@/routes';
 
 export default function Tasks() {
     const [viewMode, setViewMode] = useState<'list' | 'board'>('list');
@@ -18,12 +20,12 @@ export default function Tasks() {
     const [showFilters, setShowFilters] = useState(false);
     const [selectedTask, setSelectedTask] = useState<any>(null);
 
-        // 2. Update Logika Filtering
+    // 2. Update Logika Filtering
     const filteredTasks = TASKS_LIST_DUMMY.filter((task) => {
         const matchesSearch =
             task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             task.project.toLowerCase().includes(searchQuery.toLowerCase());
-        
+
         // Jika array kosong, berarti "All" (tampilkan semua)
         // Jika tidak kosong, cek apakah status task ada di dalam daftar pilihan user
         const matchesStatus = selectedStatus.length === 0 || selectedStatus.includes(task.status);
@@ -56,21 +58,25 @@ export default function Tasks() {
         };
         return config[priority] || config.medium;
     };
+    const breadcrumbs: BreadcrumbItem[] = [
+        { title: 'Tasks', href: tasks().url },
+    ];
+
 
     return (
-        <AppLayout>
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Tasks" />
             <div className="mx-auto w-full max-w-[1600px] flex flex-col gap-8 p-6 md:p-10 transition-all">
                 <TaskHeader onAction={() => { }} />
                 <TaskStats taskData={TASKS_DUMMY} />
-                
+
                 <TaskControls
                     viewMode={viewMode} setViewMode={setViewMode}
                     searchQuery={searchQuery} setSearchQuery={setSearchQuery}
                     showFilters={showFilters} setShowFilters={setShowFilters}
                     activeFiltersCount={
-                    (selectedStatus.length > 0 ? 1 : 0) +
-                    (selectedPriority.length > 0 ? 1 : 0)
+                        (selectedStatus.length > 0 ? 1 : 0) +
+                        (selectedPriority.length > 0 ? 1 : 0)
                     }
                 />
 
@@ -119,7 +125,7 @@ export default function Tasks() {
                     <div className="bg-card border border-border p-8 rounded-[32px] max-w-md w-full" onClick={e => e.stopPropagation()}>
                         <h2 className="text-white font-bold text-xl italic">{selectedTask.title}</h2>
                         <p className="text-muted-foreground mt-4">{selectedTask.description || "No description available."}</p>
-                        <button 
+                        <button
                             className="mt-6 w-full py-3 bg-sada-red text-white font-bold rounded-xl"
                             onClick={() => setSelectedTask(null)}
                         >

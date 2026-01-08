@@ -1,12 +1,12 @@
 import { NavFooter } from '@/components/nav-footer';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { bugs, dashboard, projects, tasks, workspaces } from '@/routes';
+import { bugs, dashboard, projects, taskMembers, tasks, timesheetMembers, workspaces } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { BugIcon, Building2, ChartColumnIncreasing, Clock, FileTextIcon, FolderKanban, LayoutGrid, MessageCircleQuestionIcon, Settings, Shield, SquareCheck, Users, } from 'lucide-react';
 import AppLogo from './app-logo';
-import { NavMain, NavManagement } from './nav-main';
+import { NavMain, NavManagement, NavMember } from './nav-main';
 
 
 interface NavItemWithActive extends NavItem {
@@ -46,6 +46,12 @@ export function AppSidebar() {
         { title: 'Invoices', href: '/invoices', icon: FileTextIcon }
     ];
 
+    const UserNavItems: NavItemWithActive[] = [
+        { title: 'Tasks', href: taskMembers(), icon: SquareCheck },
+        { title: 'Timesheets', href: timesheetMembers(), icon: Clock },
+    ];
+
+
     if (isSuperAdmin) {
         mainNavItems.push({ title: 'Access Control', href: '/permissions', icon: Shield });
     }
@@ -80,6 +86,7 @@ export function AppSidebar() {
                     ...item,
                     isActive: isActive(item.href)
                 }))} />
+
             </SidebarContent>
 
             <SidebarFooter className="border-t border-border/50 p-2 gap-2 shrink-0">

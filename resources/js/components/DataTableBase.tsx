@@ -2,7 +2,6 @@ import React, { forwardRef, useEffect, useState, useImperativeHandle, useRef } f
 import DataTable from 'datatables.net-react';
 import DT from 'datatables.net-dt';
 import 'datatables.net-responsive-dt';
-import $ from 'jquery';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 DataTable.use(DT);
@@ -32,12 +31,9 @@ const DataTableBase = forwardRef<any, any>(({ columns, data, options }, ref) => 
                 current: info.page,
                 pages: info.pages
             });
-        } catch (e) {
-            
-        }
+        } catch (e) {}
     };
 
-    
     useEffect(() => {
         if (internalRef.current && data) {
             updatePageInfo();
@@ -55,16 +51,41 @@ const DataTableBase = forwardRef<any, any>(({ columns, data, options }, ref) => 
 
     return (
         <div className="w-full">
+            {/* Gaya CSS Dinamis Berbasis Variabel CSS Shadcn/Sada */}
             <style>{`
                 .dt-paging, .dataTables_paginate, .dt-info, .dataTables_info { display: none !important; }
-                table.dataTable { border-collapse: collapse !important; width: 100% !important; margin-bottom: 1rem !important; }
-                table.dataTable thead th { 
-                    background: transparent !important; color: #525252 !important; 
-                    font-size: 10px !important; text-transform: uppercase !important; 
-                    letter-spacing: 0.2em !important; padding: 20px !important;
-                    border-bottom: 1px solid #1a1a1a !important; font-weight: 900 !important;
+                
+                table.dataTable { 
+                    border-collapse: collapse !important; 
+                    width: 100% !important; 
+                    margin-bottom: 1rem !important;
+                    background-color: transparent !important;
                 }
-                table.dataTable tbody td { border-bottom: 1px solid #141414 !important; padding: 16px 20px !important; }
+
+                table.dataTable thead th { 
+                    background: transparent !important; 
+                    color: var(--muted-foreground) !important; 
+                    font-size: 10px !important; 
+                    text-transform: uppercase !important; 
+                    letter-spacing: 0.2em !important; 
+                    padding: 20px !important;
+                    border-bottom: 1px solid var(--border) !important; 
+                    font-weight: 900 !important;
+                }
+
+                table.dataTable tbody td { 
+                    border-bottom: 1px solid var(--border) !important; 
+                    padding: 16px 20px !important;
+                    color: var(--foreground) !important;
+                    font-size: 13px;
+                }
+
+                table.dataTable tbody tr:hover {
+                    background-color: var(--muted) !important;
+                }
+                
+                .dtr-details { width: 100%; }
+                .dtr-title { font-weight: bold; color: var(--muted-foreground); margin-right: 10px; }
             `}</style>
 
             <DataTable 
@@ -81,39 +102,36 @@ const DataTableBase = forwardRef<any, any>(({ columns, data, options }, ref) => 
                     initComplete: () => updatePageInfo(),
                     ...options
                 }} 
-                className="w-full"
+                className="w-full text-foreground"
             />
 
-            
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 px-2 border-t border-white/5 pt-6">
-                <div className="text-[11px] font-bold text-neutral-500 uppercase tracking-widest">
-                    Showing <span className="text-white">{pageInfo.start}</span> to <span className="text-white">{pageInfo.end}</span> of <span className="text-white">{pageInfo.total}</span> entries
+            {/* Pagination Controls - Adaptive Colors */}
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 px-2 border-t border-border pt-6">
+                <div className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
+                    Showing <span className="text-foreground">{pageInfo.start}</span> to <span className="text-foreground">{pageInfo.end}</span> of <span className="text-foreground">{pageInfo.total}</span> entries
                 </div>
 
                 <div className="flex items-center gap-2">
+                    {/* PREV BUTTON */}
                     <button
                         type="button"
                         onClick={() => handlePageClick(pageInfo.current - 1)}
                         disabled={pageInfo.current === 0}
-                        className="flex items-center gap-2 h-10 px-4 rounded-xl border border-neutral-800 bg-[#0a0a0a] text-[12px] font-bold text-neutral-400 hover:bg-neutral-900 hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+                        className="flex items-center gap-2 h-10 px-4 rounded-xl border border-border bg-card text-[12px] font-bold text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-all"
                     >
                         <ChevronLeft size={16} /> Prev
                     </button>
 
+                    {/* PAGE NUMBERS */}
                     <div className="flex items-center gap-1">
                         {(() => {
                             const pages = [];
                             const totalPages = pageInfo.pages;
                             const current = pageInfo.current;
-                            const delta = 1; // Jumlah angka di kiri-kanan halaman aktif
+                            const delta = 1;
 
                             for (let i = 0; i < totalPages; i++) {
-                                // Tampilkan halaman pertama, halaman terakhir, dan halaman di sekitar yang aktif
-                                if (
-                                    i === 0 || 
-                                    i === totalPages - 1 || 
-                                    (i >= current - delta && i <= current + delta)
-                                ) {
+                                if (i === 0 || i === totalPages - 1 || (i >= current - delta && i <= current + delta)) {
                                     pages.push(
                                         <button
                                             key={i}
@@ -121,33 +139,30 @@ const DataTableBase = forwardRef<any, any>(({ columns, data, options }, ref) => 
                                             onClick={() => handlePageClick(i)}
                                             className={`size-10 flex items-center justify-center rounded-xl text-[12px] font-black transition-all border ${
                                                 current === i 
-                                                ? 'bg-[#ef4444] border-[#ef4444] text-white shadow-lg shadow-red-950/20' 
-                                                : 'border-neutral-800 bg-[#0a0a0a] text-neutral-400 hover:border-neutral-600'
+                                                ? 'bg-sada-red border-sada-red text-white shadow-lg shadow-sada-red/20' 
+                                                : 'border-border bg-card text-muted-foreground hover:border-muted-foreground/50'
                                             }`}
                                         >
                                             {i + 1}
                                         </button>
                                     );
                                 } 
-                                // Tambahkan titik-titik (ellipsis)
-                                else if (
-                                    (i === current - delta - 1 && i > 0) || 
-                                    (i === current + delta + 1 && i < totalPages - 1)
-                                ) {
+                                else if ((i === current - delta - 1 && i > 0) || (i === current + delta + 1 && i < totalPages - 1)) {
                                     pages.push(
-                                        <span key={i} className="px-2 text-neutral-600 font-bold">...</span>
+                                        <span key={i} className="px-2 text-muted-foreground/50 font-bold">...</span>
                                     );
                                 }
                             }
                             return pages;
-                    })()}
-                </div>
+                        })()}
+                    </div>
 
+                    {/* NEXT BUTTON */}
                     <button
                         type="button"
                         onClick={() => handlePageClick(pageInfo.current + 1)}
                         disabled={pageInfo.current >= pageInfo.pages - 1 || pageInfo.pages === 0}
-                        className="flex items-center gap-2 h-10 px-4 rounded-xl border border-neutral-800 bg-[#0a0a0a] text-[12px] font-bold text-neutral-400 hover:bg-neutral-900 hover:text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+                        className="flex items-center gap-2 h-10 px-4 rounded-xl border border-border bg-card text-[12px] font-bold text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-all"
                     >
                         Next <ChevronRight size={16} />
                     </button>

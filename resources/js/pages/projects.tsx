@@ -9,6 +9,8 @@ import { ProjectFilters } from "@/layouts/projects/ProjectFilters";
 import { PROJECTS_DUMMY } from "@/data/project";
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
+import { BreadcrumbItem } from "@/types";
+import { projects, workspaces } from "@/routes";
 
 export default function Projects() {
     const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -18,15 +20,15 @@ export default function Projects() {
     const [showFilters, setShowFilters] = useState(false);
 
     const filteredProjects = PROJECTS_DUMMY.filter((project) => {
-    const matchesSearch =
-        project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.description.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    // Logic Multi-Select
-    const matchesStatus = selectedStatus.length === 0 || selectedStatus.includes(project.status);
-    const matchesPriority = selectedPriority.length === 0 || selectedPriority.includes(project.priority);
+        const matchesSearch =
+            project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            project.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-    return matchesSearch && matchesStatus && matchesPriority;
+        // Logic Multi-Select
+        const matchesStatus = selectedStatus.length === 0 || selectedStatus.includes(project.status);
+        const matchesPriority = selectedPriority.length === 0 || selectedPriority.includes(project.priority);
+
+        return matchesSearch && matchesStatus && matchesPriority;
     });
 
     const statsSummary = {
@@ -35,15 +37,18 @@ export default function Projects() {
         totalCompleted: PROJECTS_DUMMY.filter(p => p.status === 'completed').length,
         totalOverdue: PROJECTS_DUMMY.filter(p => p.status === 'overdue').length,
     };
+    const breadcrumbs: BreadcrumbItem[] = [
+        { title: 'Projects', href: projects().url },
+    ];
 
     return (
-        <AppLayout>
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Projects" />
             <div className="mx-auto w-full max-w-[1600px] flex flex-col gap-8 p-6 md:p-10 transition-all">
-                
+
                 <ProjectHeader />
-                
-                <ProjectStats 
+
+                <ProjectStats
                     totalProjects={statsSummary.totalProjects}
                     totalInProgress={statsSummary.totalInProgress}
                     totalCompleted={statsSummary.totalCompleted}
@@ -58,7 +63,7 @@ export default function Projects() {
                     onFilterClick={() => setShowFilters(!showFilters)}
                 />
 
-                <ProjectFilters 
+                <ProjectFilters
                     isVisible={showFilters}
                     selectedStatus={selectedStatus}
                     setSelectedStatus={setSelectedStatus}
@@ -73,18 +78,18 @@ export default function Projects() {
                 <div className="mt-2">
                     {viewMode === 'list' ? (
                         <div className="animate-in fade-in zoom-in-95 duration-500">
-                            <DataTableBase 
+                            <DataTableBase
                                 data={filteredProjects}
                                 columns={getProjectColumns()}
                                 options={{
                                     pageLength: 10,
                                     paginate: {
-                                    previous: "Previous",
-                                    next: "Next",
-                                    // Kosongkan karakter anehnya
-                                    first: "First",
-                                    last: "Last"
-                                },
+                                        previous: "Previous",
+                                        next: "Next",
+                                        // Kosongkan karakter anehnya
+                                        first: "First",
+                                        last: "Last"
+                                    },
                                     createdRow: (row: any) => {
                                         row.classList.add('cursor-pointer');
                                     }
