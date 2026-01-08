@@ -34,7 +34,7 @@ export const getTaskColumns = (getStatusInfo: any, getPriorityInfo: any) => [
     {
         // Kolom Gabungan Workspace & Project
         data: 'project',
-        title: '',
+        title: 'Workspace & Project',
         width: '18%',
         className: 'align-middle',
         render: (data: any, type: any, row: any) => `
