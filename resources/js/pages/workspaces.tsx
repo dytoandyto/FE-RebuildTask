@@ -1,15 +1,18 @@
 import AppLayout from '@/layouts/app-layout';
-import { dashboard, workspaces } from '@/routes';
-import { type BreadcrumbItem } from '@/types';
+import { workspaces } from '@/routes';
+import { BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
-import { Page, revealProgress } from '@inertiajs/core';
-import { act, useState } from "react";
+import { Page } from '@inertiajs/core';
+import { useState, useRef } from "react";
 import { WorkspaceHeader } from "@/layouts/workspace/WorkspaceHeader";
 import { WorkspaceControls } from "@/layouts/workspace/WorkspaceControls";
 import { WorkspaceCard } from "@/layouts/workspace/WorkspaceCard";
 import { WorkspaceStats } from "@/layouts/workspace/WorkspacesStats";
 import { WORKSPACES_DUMMY } from "@/data/workspace-data";
+import DataTableBase from '@/components/DataTableBase';
+import { getWorkspaceColumns } from "@/layouts/workspace/getWorkspaceColumns";
 
+// 1. Definisi Interface (Harus di luar function agar tidak error)
 interface WorkspacesProps extends Page {
     auth: {
         user: {
@@ -23,16 +26,18 @@ interface WorkspacesProps extends Page {
     [key: string]: unknown;
 }
 
+// 2. Definisi Breadcrumbs
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Workspaces', href: workspaces().url },
 ];
 
 export default function Workspaces() {
     const { props } = usePage<WorkspacesProps>();
-    const [viewMode, setViewMode] = useState<'grid' | 'list'>('list'); // Default ke list sesuai permintaan sebelumnya
+    const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
     const [searchQuery, setSearchQuery] = useState('');
+    const tableRef = useRef(null);
 
-    // Filter menggunakan data dari import
+    // Filter data berdasarkan search bar
     const filteredWorkspaces = WORKSPACES_DUMMY.filter(ws =>
         ws.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         ws.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -41,8 +46,9 @@ export default function Workspaces() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Workspaces" />
+            
             <div className="mx-auto w-full max-w-[1600px] flex flex-col gap-8 p-6 md:p-10 transition-all">
-
+                
                 <WorkspaceHeader
                     title="Workspaces"
                     description="Monitor and manage all your active team environments."
@@ -57,22 +63,32 @@ export default function Workspaces() {
                     setSearchQuery={setSearchQuery}
                 />
 
-                <div className={viewMode === 'grid'
-                    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-in fade-in duration-500'
-                    : 'flex flex-col gap-4 animate-in slide-in-from-bottom-4 duration-500'
-                }>
-                    {filteredWorkspaces.map((workspace) => (
-                        <WorkspaceCard
-                            key={workspace.id}
-                            workspace={workspace}
-                            viewMode={viewMode}
-                        />
-                    ))}
-                </div>
-
-                {/* Empty State */}
-                {filteredWorkspaces.length === 0 && (
-                    <div className="..."> {/* Kode Empty State Anda */} </div>
+                {/* LOGIC SWITCHER: GRID VS LIST */}
+                {filteredWorkspaces.length > 0 ? (
+                    viewMode === 'list' ? (
+                        <div className="bg-[#050505]/50 border border-white/5 rounded-3xl p-6 animate-in fade-in duration-500">
+                            <DataTableBase 
+                                ref={tableRef}
+                                data={filteredWorkspaces}
+                                columns={getWorkspaceColumns()}
+                            />
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-in fade-in duration-500">
+                            {filteredWorkspaces.map((workspace) => (
+                                <WorkspaceCard
+                                    key={workspace.id}
+                                    workspace={workspace}
+                                    viewMode={viewMode}
+                                />
+                            ))}
+                        </div>
+                    )
+                ) : (
+                    /* Empty State */
+                    <div className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-white/5 rounded-3xl">
+                        <p className="text-neutral-500 font-medium italic">No workspaces found matching "${searchQuery}"</p>
+                    </div>
                 )}
             </div>
         </AppLayout>
