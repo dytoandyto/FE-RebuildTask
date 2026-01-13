@@ -1,7 +1,7 @@
 import DataTableBase from "@/components/DataTableBase";
 import { getTaskColumns } from "./TaskColumns";
-
-export const TaskTable = ({ tasks, getStatusInfo, getPriorityInfo, onRowClick }: any) => {
+import React, { forwardRef } from 'react';
+export const TaskTable = forwardRef (({ tasks, getStatusInfo, getPriorityInfo, onRowClick }: any, ref: any) => {
     return (
         <DataTableBase 
             data={tasks}
@@ -22,4 +22,4 @@ export const TaskTable = ({ tasks, getStatusInfo, getPriorityInfo, onRowClick }:
             }}
         />
     );
-};
+});

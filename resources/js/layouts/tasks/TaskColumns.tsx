@@ -108,6 +108,22 @@ export const getTaskColumns = (getStatusInfo: any, getPriorityInfo: any) => [
         }
     },
     {
+        data: 'dueDate', // Pastikan di TASKS_LIST_DUMMY lo ada field 'dueDate' (format: "YYYY-MM-DD")
+        title: 'Due Date',
+        width: '10%',
+        className: 'align-middle',
+        render: (data: any) => {
+            if (!data) return '<span class="text-muted-foreground text-[10px]">-</span>';
+            
+            return `
+                <div class="flex flex-col">
+                    <span class="text-[11px] font-bold text-foreground leading-tight italic uppercase">${data}</span>
+                    <span class="text-[8px] font-black text-muted-foreground/50 uppercase tracking-tighter">Deadline</span>
+                </div>
+            `;
+        }
+    },
+    {
         data: null,
         title: 'Actions',
         orderable: false,

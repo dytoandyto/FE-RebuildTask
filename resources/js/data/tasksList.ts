@@ -323,7 +323,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-019",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -341,7 +341,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-020",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -359,7 +359,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-021",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -377,7 +377,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-022",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -395,7 +395,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-023",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -413,7 +413,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-024",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -431,7 +431,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-025",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -449,7 +449,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-026",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -467,7 +467,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-027",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -485,7 +485,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-028",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -503,7 +503,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-029",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -521,7 +521,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-030",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -539,7 +539,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-031",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -557,7 +557,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-032",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -575,7 +575,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
+        id: "TSK-033",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 
@@ -593,332 +593,7 @@ export const TASKS_LIST_DUMMY = [
     },
 
     {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
-        title: "duit, energi,sawit",
-        description: "Implemetasi duit",
-        workspace: "Design Team", 
-        project: "Web Dashboard Internal",
-        status: "completed",
-        priority: "high",
-        progress: 100,
-        assignee: {
-            name: "Michael Chen",
-            avatar: "https://i.pravatar.cc/150?u=michael"
-        },
-        dueDate: "12/05/2025",
-        comments: 3,
-        attachments: 1
-    },
-
-    {
-        id: "TSK-015",
+        id: "TSK-034",
         title: "duit, energi,sawit",
         description: "Implemetasi duit",
         workspace: "Design Team", 

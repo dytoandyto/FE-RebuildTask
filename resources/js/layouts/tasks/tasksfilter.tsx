@@ -1,13 +1,14 @@
 import { X, Check } from "lucide-react";
-
+import { DateRangePicker } from '@/components/DateRangeFilter';
 
 interface TaskFiltersProps {
     isVisible: boolean;
-    selectedStatus: string;
-    setSelectedStatus: (status: string) => void;
-    selectedPriority: string;
-    setSelectedPriority: (priority: string) => void;
+    selectedStatus: string[];
+    setSelectedStatus: (status: string[]) => void;
+    selectedPriority: string[];
+    setSelectedPriority: (priority: string[]) => void;
     onReset: () => void;
+    onDateFilter: (range: any) => void;
 }
 
 export const TaskFilters = ({
@@ -16,8 +17,9 @@ export const TaskFilters = ({
     setSelectedStatus,
     selectedPriority,
     setSelectedPriority,
-    onReset
-}: any) => {
+    onReset,
+    onDateFilter
+}: TaskFiltersProps) => {
     if (!isVisible) return null;
 
     const statuses = ['todo', 'in-progress', 'completed', 'overdue']; // Hapus 'all' dari list karena defaultnya []
@@ -60,6 +62,7 @@ export const TaskFilters = ({
                         ))}
                     </div>
                 </div>
+                
 
                 {/* Priority Filter */}
                 <div>
@@ -81,6 +84,16 @@ export const TaskFilters = ({
                                 </div>
                             </button>
                         ))}
+                    </div>
+                </div>
+
+                <div className="pt-4 border-t border-neutral-800/50">
+                    <h3 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] mb-4">Filter by Due Date</h3>
+                    <div className="flex items-center gap-4">
+                        <DateRangePicker onFilter={onDateFilter} />
+                        <p className="text-[10px] italic text-neutral-500">
+                        Select a range to filter tasks by their deadlines.
+                        </p>
                     </div>
                 </div>
 
