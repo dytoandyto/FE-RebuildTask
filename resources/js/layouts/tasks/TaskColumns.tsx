@@ -117,7 +117,7 @@ export const getTaskColumns = (getStatusInfo: any, getPriorityInfo: any) => [
             
             return `
                 <div class="flex flex-col">
-                    <span class="text-[11px] font-bold text-foreground leading-tight italic uppercase">${data}</span>
+                    <span class="text-[11px] font-bold text-foreground leading-tight uppercase">${data}</span>
                     <span class="text-[8px] font-black text-muted-foreground/50 uppercase tracking-tighter">Deadline</span>
                 </div>
             `;
