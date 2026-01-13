@@ -130,7 +130,7 @@ export default function Tasks() {
                 </div>
 
                 {filteredTasks.length === 0 && (
-                    <div className="text-center py-20 bg-[#050505]/50 rounded-[32px] border border-dashed border-white/5 mt-4">
+                    <div className="text-center py-20 text-neutral-400 dark:text-neutral-600">
                         <p className="text-neutral-500 font-medium italic">
                             No tasks found matching your filters.
                         </p>
