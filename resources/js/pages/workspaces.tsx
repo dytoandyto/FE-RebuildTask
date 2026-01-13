@@ -66,7 +66,7 @@ export default function Workspaces() {
                 {/* LOGIC SWITCHER: GRID VS LIST */}
                 {filteredWorkspaces.length > 0 ? (
                     viewMode === 'list' ? (
-                        <div className="bg-[#050505]/50 border border-white/5 rounded-3xl p-6 animate-in fade-in duration-500">
+                        <div className="">
                             <DataTableBase 
                                 ref={tableRef}
                                 data={filteredWorkspaces}
