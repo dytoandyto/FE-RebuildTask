@@ -1,11 +1,13 @@
+import ReactDOMServer from 'react-dom/server';
+import { Building2, FolderKanban } from "lucide-react";
+
 export const getProjectColumns = () => [
     {
         data: 'name',
         title: 'PROJECT DETAILS',
-        width: '30%',
+        width: '25%',
         className: 'text-left align-middle px-6 group',
         render: (data: any, type: any, row: any) => {
-            // Mengambil gaya status dari ProjectCard agar sinkron
             const statusStyles: any = {
                 "in-progress": "bg-blue-500/10 text-blue-600 border-blue-500/20",
                 "completed": "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
@@ -32,12 +34,36 @@ export const getProjectColumns = () => [
         }
     },
     {
+        // --- KOLOM BARU: WORKSPACE ---
+        data: 'workspace_name', // Pastikan di dummy project ada field ini, atau ambil dari relasi
+        title: 'WORKSPACE',
+        width: '15%',
+        className: 'text-left align-middle hidden xl:table-cell',
+        render: (data: any, type: any, row: any) => {
+            const workspaceIcon = ReactDOMServer.renderToString(
+                <Building2 size={12} className="text-sada-red" />
+            );
+            return `
+                <div class="flex flex-col gap-1">
+                    <div class="flex items-center gap-1.5">
+                        <div class="bg-sada-red/10 p-1 rounded-md">
+                            ${workspaceIcon}
+                        </div>
+                        <span class="text-[10px] font-black text-foreground uppercase tracking-tight truncate max-w-[120px]">
+                            ${row.workspace_name || 'General'}
+                        </span>
+                    </div>
+                </div>
+            `;
+        }
+    },
+    {
         data: 'description',
         title: 'DESCRIPTION',
-        width: '25%',
+        width: '20%',
         className: 'text-left align-middle hidden lg:table-cell',
         render: (data: any) => `
-            <p class="text-[11px] text-muted-foreground italic leading-relaxed line-clamp-1 max-w-[250px]">
+            <p class="text-[11px] text-muted-foreground italic leading-relaxed line-clamp-1 max-w-[200px]">
                 ${data || '-'}
             </p>
         `
@@ -45,16 +71,16 @@ export const getProjectColumns = () => [
     {
         data: 'progress',
         title: 'PROGRESS',
-        width: '18%',
+        width: '15%',
         className: 'text-left align-middle',
         render: (data: any, type: any, row: any) => `
-            <div class="flex flex-col gap-1.5 max-w-[180px]">
+            <div class="flex flex-col gap-1.5 max-w-[150px]">
                 <div class="flex justify-between text-[10px] font-bold uppercase tracking-tighter text-muted-foreground">
-                    <span>Progress</span>
+                    <span>Integrity</span>
                     <span class="text-foreground">${data}%</span>
                 </div>
-                <div class="h-2 bg-muted rounded-full overflow-hidden w-full border border-border/50">
-                    <div class="h-full bg-gradient-to-r ${row.color || 'from-blue-500 to-purple-500'} transition-all duration-1000 ease-out" style="width: ${data}%"></div>
+                <div class="h-1.5 bg-muted rounded-full overflow-hidden w-full border border-border/50">
+                    <div class="h-full bg-gradient-to-r ${row.color || 'from-blue-500 to-purple-500'} transition-all duration-1000 ease-out shadow-[0_0_8px_rgba(0,0,0,0.2)]" style="width: ${data}%"></div>
                 </div>
             </div>
         `
@@ -62,14 +88,16 @@ export const getProjectColumns = () => [
     {
         data: 'manager',
         title: 'MANAGER',
-        width: '15%',
+        width: '12%',
         className: 'text-left align-middle',
         render: (data: any) => `
-            <div class="flex items-center gap-3">
-                <img src="${data.avatar}" class="size-8 rounded-full border-2 border-background shadow-sm object-cover" />
+            <div class="flex items-center gap-2.5">
+                <div class="size-8 rounded-full border-2 border-background shadow-md overflow-hidden bg-muted">
+                    <img src="${data.avatar}" class="size-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=${data.name}&background=1a1a1a&color=fff'" />
+                </div>
                 <div class="flex flex-col">
-                    <span class="text-[11px] font-bold text-foreground leading-none">${data.name}</span>
-                    <span class="text-[9px] text-muted-foreground uppercase font-medium tracking-tighter mt-1">Project Manager</span>
+                    <span class="text-[10px] font-black text-foreground leading-none truncate max-w-[80px]">${data.name}</span>
+                    <span class="text-[8px] text-muted-foreground uppercase font-bold tracking-tighter mt-1">Lead</span>
                 </div>
             </div>
         `
@@ -77,7 +105,7 @@ export const getProjectColumns = () => [
     {
         data: 'tasks', 
         title: 'TASKS',
-        width: '12%',
+        width: '10%',
         className: 'text-left align-middle',
         render: (data: any, type: any, row: any) => {
             const priorityStyles: any = {
@@ -89,12 +117,11 @@ export const getProjectColumns = () => [
             const completed = data?.completed || 0;
 
             return `
-                <div class="flex items-center gap-3">
-                    <div class="flex items-center gap-1 font-bold text-foreground text-xs">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                         <span class="">${completed}</span>
+                <div class="flex flex-col gap-1.5">
+                    <div class="flex items-center gap-1 text-[10px] font-black text-foreground italic">
+                         <span class="text-emerald-500">✓</span> ${completed} <span class="text-muted-foreground opacity-50">/ ${data?.total || 0}</span>
                     </div>
-                    <div class="uppercase font-black text-[8px] tracking-widest rounded-lg px-2 py-1 ${currentPriorityStyle}">
+                    <div class="uppercase font-black text-[7px] tracking-[0.2em] rounded border border-current px-1.5 py-0.5 w-fit ${currentPriorityStyle}">
                         ${row.priority}
                     </div>
                 </div>
@@ -104,11 +131,11 @@ export const getProjectColumns = () => [
     {
         data: null,
         title: '',
-        width: '5%',
+        width: '3%',
         className: 'text-right pr-6 align-middle',
         render: () => `
-            <button class="p-2 hover:bg-muted rounded-xl transition-colors text-muted-foreground hover:text-foreground active:scale-90">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+            <button class="p-2 hover:bg-muted rounded-xl transition-all text-muted-foreground hover:text-sada-red active:scale-90">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
             </button>
         `
     }
