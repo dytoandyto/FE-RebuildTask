@@ -6,7 +6,7 @@ export const PROJECTS_DUMMY = [
         description: "Complete redesign of company website with modern UI/UX",
         status: "in-progress",
         progress: 67,
-        deadline: "Dec 15, 2025",
+        deadline: "2025-12-15",
         manager: {
             name: "Michael Chen",
             avatar: "https://images.unsplash.com/photo-1598268012815-ae21095df31b?q=80&w=100&auto=format&fit=crop"

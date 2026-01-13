@@ -8,9 +8,11 @@ import { getProjectColumns } from "@/layouts/projects/ProjectColumns";
 import { ProjectFilters } from "@/layouts/projects/ProjectFilters";
 import { PROJECTS_DUMMY } from "@/data/project";
 import { Head } from "@inertiajs/react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { BreadcrumbItem } from "@/types";
-import { projects, workspaces } from "@/routes";
+import { projects } from "@/routes";
+import { DateRange } from "react-day-picker";
+import { startOfDay, endOfDay } from "date-fns";
 
 export default function Projects() {
     const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -18,28 +20,52 @@ export default function Projects() {
     const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
     const [selectedPriority, setSelectedPriority] = useState<string[]>([]);
     const [showFilters, setShowFilters] = useState(false);
+    const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
-    const filteredProjects = PROJECTS_DUMMY.filter((project) => {
-        const matchesSearch =
-            project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            project.description.toLowerCase().includes(searchQuery.toLowerCase());
-
-        // Logic Multi-Select
+    const filteredProjects = useMemo(() => {
+        return PROJECTS_DUMMY.filter((project) => {
+        // 1. Search, Status, Priority (Aman)
+        const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesStatus = selectedStatus.length === 0 || selectedStatus.includes(project.status);
         const matchesPriority = selectedPriority.length === 0 || selectedPriority.includes(project.priority);
 
-        return matchesSearch && matchesStatus && matchesPriority;
+        // 2. Logic Tanggal
+        let matchesDate = true;
+        if (dateRange?.from && dateRange?.to) {
+            const start = startOfDay(dateRange.from).getTime();
+            const end = endOfDay(dateRange.to).getTime();
+            
+            // Kita parse tanggal deadline-nya
+            const projectTime = new Date(project.deadline).getTime();
+
+            if (!isNaN(projectTime)) {
+                matchesDate = projectTime >= start && projectTime <= end;
+            } else {
+                // Log kalau ada data yang formatnya rusak
+                console.warn(`Format tanggal salah di project ${project.name}: ${project.deadline}`);
+                matchesDate = false; 
+            }
+        }
+
+        return matchesSearch && matchesStatus && matchesPriority && matchesDate;
     });
+    }, [searchQuery, selectedStatus, selectedPriority, dateRange]);
 
     const statsSummary = {
-        totalProjects: PROJECTS_DUMMY.length,
-        totalInProgress: PROJECTS_DUMMY.filter(p => p.status === 'in-progress').length,
-        totalCompleted: PROJECTS_DUMMY.filter(p => p.status === 'completed').length,
-        totalOverdue: PROJECTS_DUMMY.filter(p => p.status === 'overdue').length,
+        totalProjects: filteredProjects.length,
+        totalInProgress: filteredProjects.filter(p => p.status === 'in-progress').length,
+        totalCompleted: filteredProjects.filter(p => p.status === 'completed').length,
+        totalOverdue: filteredProjects.filter(p => p.status === 'overdue').length,
     };
+
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Projects', href: projects().url },
     ];
+    
+    const handleDateFilter = (range: DateRange | undefined) => {
+        console.log("Range dipilih:", range); // Buat mastiin data masuk
+        setDateRange(range);
+    };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -69,9 +95,14 @@ export default function Projects() {
                     setSelectedStatus={setSelectedStatus}
                     selectedPriority={selectedPriority}
                     setSelectedPriority={setSelectedPriority}
+                    onDateFilter={(range) => {
+                        console.log("Range dipilih:", range); // Cek apakah range masuk ke sini
+                        setDateRange(range);
+                    }}
                     onReset={() => {
                         setSelectedStatus([]);
                         setSelectedPriority([]);
+                        setDateRange(undefined);
                     }}
                 />
 
@@ -83,13 +114,6 @@ export default function Projects() {
                                 columns={getProjectColumns()}
                                 options={{
                                     pageLength: 10,
-                                    paginate: {
-                                        previous: "Previous",
-                                        next: "Next",
-                                        // Kosongkan karakter anehnya
-                                        first: "First",
-                                        last: "Last"
-                                    },
                                     createdRow: (row: any) => {
                                         row.classList.add('cursor-pointer');
                                     }
@@ -111,7 +135,7 @@ export default function Projects() {
 
                 {filteredProjects.length === 0 && (
                     <div className="text-center py-20 bg-card rounded-[32px] border border-dashed border-border mt-4">
-                        <p className="text-muted-foreground font-medium italic">No projects found matching "{searchQuery}"</p>
+                        <p className="text-muted-foreground font-medium italic">No projects found matching your criteria</p>
                     </div>
                 )}
             </div>
