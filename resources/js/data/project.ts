@@ -25,7 +25,16 @@ export const PROJECTS_DUMMY: Project[] = [
         progress: 67,
         members: 8,
         priority: "high",
-        color: "bg-sada-red"
+        color: "bg-sada-red",
+        deadline: "",
+        manager: {
+            name: "",
+            avatar: ""
+        },
+        tasks: {
+            total: 0,
+            completed: 0
+        }
     },
     {
         id: 2,

@@ -1,69 +1,91 @@
 import ReactDOMServer from 'react-dom/server';
-import { MoreVertical, FolderKanban, Building2, LayoutGrid } from "lucide-react";
+import { MoreVertical, FolderKanban, Building2, LayoutGrid, CalendarDays } from "lucide-react";
 
 export const getTaskColumns = (getStatusInfo: any, getPriorityInfo: any) => [
     {
         data: 'title',
-        title: 'Task Name',
-        width: '20%',
+        title: 'TASK NAME',
+        width: '30%',
         className: 'text-left align-middle px-6 group',
         render: (data: any, type: any, row: any) => {
-            const folderIcon = ReactDOMServer.renderToString(
-                <div className="size-9 flex items-center justify-center rounded-xl bg-gradient-to-br from-sada-red to-sada-red-hover shadow-lg shadow-sada-red/10">
-                    <FolderKanban className="size-4 text-white" />
-                </div>
-            );
+            // Konfigurasi style status agar konsisten dengan project
+            const statusStyles: any = {
+                "todo": "bg-muted text-muted-foreground border-border",
+                "in-progress": "bg-blue-500/10 text-blue-500 border-blue-500/20",
+                "completed": "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
+                "overdue": "bg-sada-red/10 text-sada-red border-sada-red/20"
+            };
+
+            const currentStatusStyle = statusStyles[row.status] || statusStyles.todo;
 
             return `
-                <div class="flex items-center gap-4 py-2 cursor-pointer">
-                    ${folderIcon}
-                    <div class="flex flex-col gap-0.5">
-                        <span class="font-bold text-foreground text-sm group-hover:text-sada-red transition-colors uppercase leading-tight">
-                            ${row.title}
+            <div class="flex items-center gap-4 py-4 cursor-pointer group">
+                <div class="size-12 rounded-2xl bg-gradient-to-br from-sada-red to-red-900 flex items-center justify-center shadow-lg shadow-sada-red/20 group-hover:scale-105 transition-all duration-300 shrink-0 border border-white/5 ring-1 ring-white/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-sm">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
+
+                <div class="flex flex-col gap-1.5 min-w-0">
+                    <span class="font-black text-foreground text-[13px] group-hover:text-sada-red transition-colors uppercase  tracking-tight leading-none truncate">
+                        ${row.title}
+                    </span>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-[8px] font-black px-2 py-0.5 rounded-md border tracking-[0.15em] uppercase  ${currentStatusStyle}">
+                            ${row.status.replace('-', ' ')}
                         </span>
-                        <div class="inline-flex items-center px-2 py-0.5 rounded-md bg-muted border border-border w-fit">
-                            <span class="text-[8px] font-black text-muted-foreground uppercase tracking-tighter">
-                                ${row.status === 'completed' ? 'COMPLETED' : 'IN PROGRESS'}
-                            </span>
-                        </div>
+                        
+                        <span class="text-[9px] font-bold text-muted-foreground/40 tracking-tighter uppercase">
+                            ${row.id}
+                        </span>
                     </div>
                 </div>
-            `;
+            </div>
+        `;
         }
     },
     {
-        // Kolom Gabungan Workspace & Project
-        data: 'project',
-        title: 'Workspace & Project',
+        data: 'project_name',
+        title: 'SECTOR & UNIT',
         width: '18%',
-        className: 'align-middle',
-        render: (data: any, type: any, row: any) => `
-            <div class="flex flex-col gap-1">
-                <div class="flex items-center gap-1.5">
-                    <LayoutGrid size={12} class="text-sada-red/60" />
-                    <span class="text-[10px] font-black text-foreground uppercase tracking-tight">${row.project}</span>
-                </div>
-                <div class="flex items-center gap-1.5">
-                    <Building2 size={10} class="text-muted-foreground/50" />
-                    <span class="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">${row.workspace}</span>
-                </div>
-            </div>`
+        className: 'align-middle hidden md:table-cell',
+        render: (data: any, type: any, row: any) => {
+            const projectIcon = ReactDOMServer.renderToString(<LayoutGrid size={11} className="text-sada-red/70" />);
+            const buildingIcon = ReactDOMServer.renderToString(<Building2 size={10} className="text-muted-foreground/40" />);
+
+            return `
+                <div class="flex flex-col gap-1.5">
+                    <div class="flex items-center gap-2">
+                        ${projectIcon}
+                        <span class="text-[10px] font-black text-foreground uppercase tracking-tight truncate max-w-[140px] ">
+                            ${row.project_name || row.project}
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-2 ml-0.5">
+                        ${buildingIcon}
+                        <span class="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.15em]">
+                            ${row.workspace_name || row.workspace}
+                        </span>
+                    </div>
+                </div>`
+        }
     },
     {
         data: 'progress',
-        title: 'Progress',
+        title: 'STABILITY',
         width: '15%',
         className: 'align-middle',
         render: (data: any) => {
-            const progress = data || 0;
+            const val = data || 0;
             return `
-                <div class="flex flex-col gap-1.5 min-w-[120px]">
-                    <div class="flex justify-between items-center text-[9px] font-black uppercase tracking-widest text-muted-foreground">
-                        <span>Completion</span>
-                        <span class="text-foreground">${progress}%</span>
+                <div class="flex flex-col gap-2 min-w-[130px]">
+                    <div class="flex justify-between items-end text-[9px] font-black uppercase tracking-widest text-muted-foreground/60">
+                        <span>Integrity</span>
+                        <span class="text-foreground font-mono">${val}%</span>
                     </div>
-                    <div class="w-full h-1.5 bg-muted rounded-full overflow-hidden border border-border">
-                        <div class="h-full bg-sada-red rounded-full shadow-[0_0_8px_rgba(227,6,19,0.3)]" style="width: ${progress}%"></div>
+                    <div class="w-full h-1.5 bg-muted/30 rounded-full overflow-hidden border border-border/50 p-[1px]">
+                        <div class="h-full bg-gradient-to-r from-sada-red to-red-600 rounded-full shadow-[0_0_10px_rgba(227,6,19,0.3)] transition-all duration-1000" style="width: ${val}%"></div>
                     </div>
                 </div>
             `;
@@ -71,21 +93,21 @@ export const getTaskColumns = (getStatusInfo: any, getPriorityInfo: any) => [
     },
     {
         data: 'assignee',
-        title: 'Assignee',
+        title: 'OPERATIVE',
         width: '15%',
         className: 'align-middle',
         render: (data: any) => {
             const name = data?.name || 'Unassigned';
-            const avatar = data?.avatar || `https://ui-avatars.com/api/?name=${name}&background=E30613&color=fff`;
-            
+            const avatar = data?.avatar || `https://ui-avatars.com/api/?name=${name}&background=1a1a1a&color=ef4444&bold=true`;
+
             return `
-                <div class="flex items-center gap-3">
-                    <div class="size-9 rounded-full border-2 border-border overflow-hidden bg-muted shadow-sm">
+                <div class="flex items-center gap-3 group/member cursor-pointer">
+                    <div class="size-9 rounded-full border-2 border-background bg-muted overflow-hidden shadow-lg group-hover/member:border-sada-red/50 transition-all">
                         <img src="${avatar}" class="size-full object-cover" />
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-[11px] font-bold text-foreground leading-tight">${name}</span>
-                        <span class="text-[9px] font-black text-muted-foreground/60 uppercase tracking-tighter">Assignee</span>
+                        <span class="text-[11px] font-black text-foreground leading-tight uppercase group-hover/member:text-sada-red transition-colors">${name}</span>
+                        <span class="text-[8px] font-bold text-muted-foreground/50 uppercase tracking-widest">Rank 01</span>
                     </div>
                 </div>
             `;
@@ -93,45 +115,49 @@ export const getTaskColumns = (getStatusInfo: any, getPriorityInfo: any) => [
     },
     {
         data: 'priority',
-        title: 'Priority',
+        title: 'PRIORITY',
         width: '12%',
         className: 'text-center align-middle',
         render: (data: any) => {
             const info = getPriorityInfo(data);
             return `
                 <div class="flex justify-center">
-                    <span class="px-3 py-1 rounded-lg bg-sada-red/10 border border-sada-red/20 text-sada-red font-black text-[9px] uppercase tracking-widest">
-                        ${info?.label || data}
+                    <span class="px-3 py-1 rounded border font-black text-[9px] uppercase tracking-[0.2em] ${info.class}">
+                        ${info.label}
                     </span>
                 </div>
             `;
         }
     },
     {
-        data: 'dueDate', // Pastikan di TASKS_LIST_DUMMY lo ada field 'dueDate' (format: "YYYY-MM-DD")
-        title: 'Due Date',
-        width: '10%',
-        className: 'align-middle',
+        data: 'dueDate',
+        title: 'DEADLINE',
+        width: '12%',
+        className: 'align-middle hidden xl:table-cell',
         render: (data: any) => {
-            if (!data) return '<span class="text-muted-foreground text-[10px]">-</span>';
-            
+            if (!data) return '<span class="text-muted-foreground text-[10px] tracking-widest uppercase">No Date</span>';
+            const calendarIcon = ReactDOMServer.renderToString(<CalendarDays size={10} className="text-sada-red/50" />);
+
             return `
-                <div class="flex flex-col">
-                    <span class="text-[11px] font-bold text-foreground leading-tight italic uppercase">${data}</span>
-                    <span class="text-[8px] font-black text-muted-foreground/50 uppercase tracking-tighter">Deadline</span>
+                <div class="flex flex-col gap-1">
+                    <div class="flex items-center gap-1.5">
+                        ${calendarIcon}
+                        <span class="text-[10px] font-black text-foreground uppercase tracking-wider">${data}</span>
+                    </div>
+                    <span class="text-[8px] font-bold text-muted-foreground/40 uppercase tracking-widest ml-4">Expiration</span>
                 </div>
             `;
         }
     },
     {
         data: null,
-        title: 'Actions',
+        title: '',
         orderable: false,
         width: '5%',
         className: 'text-right pr-6 align-middle',
         render: () => {
-            const moreIcon = ReactDOMServer.renderToString(<MoreVertical className="size-4 text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />);
-            return `<div class="flex justify-end">${moreIcon}</div>`;
+            const moreIcon = ReactDOMServer.renderToString(<MoreVertical className="size-4 text-muted-foreground cursor-pointer hover:text-sada-red transition-all" />);
+            return `<div class="flex justify-end transform hover:scale-110">${moreIcon}</div>`;
         }
     }
 ];

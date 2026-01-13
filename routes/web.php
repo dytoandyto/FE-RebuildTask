@@ -23,10 +23,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'id' => $id
         ]);
     })->name('workspaces.show');
-    
+
     Route::get('projects', function () {
-        return Inertia::render('projects');
+        return Inertia::render('projects/projects');
     })->name('projects');
+    Route::get('projects/{id}', function ($id) {
+        return Inertia::render('projects/projects-detail', [
+            'id' => $id
+        ]);
+    })->name('projects.show');
+
     Route::get('tasks', function () {
         return Inertia::render('tasks');
     })->name('tasks');

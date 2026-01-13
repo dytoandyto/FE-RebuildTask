@@ -30,18 +30,18 @@ export function AppSidebarHeader({
                 </button>
 
                 {/* Notifications */}
-                <button className="relative p-2 hover:bg-muted rounded-xl transition-colors text-muted-foreground hover:text-foreground">
+                {/* <button className="relative p-2 hover:bg-muted rounded-xl transition-colors text-muted-foreground hover:text-foreground">
                     <Bell className="size-5" />
                     <span className="absolute top-2 right-2 flex size-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sada-red opacity-75"></span>
                         <span className="relative inline-flex rounded-full size-2 bg-sada-red"></span>
                     </span>
-                </button>
+                </button> */}
 
                 {/* Settings */}
-                <button className="p-2 hover:bg-muted rounded-xl transition-colors text-muted-foreground hover:text-foreground hidden sm:flex">
+                {/* <button className="p-2 hover:bg-muted rounded-xl transition-colors text-muted-foreground hover:text-foreground hidden sm:flex">
                     <Settings className="size-5" />
-                </button>
+                </button> */}
 
                 <div className="h-6 w-px bg-border mx-1 hidden md:block" />
 

@@ -50,7 +50,7 @@ export default function Tasks() {
     const filteredTasks = TASKS_LIST_DUMMY.filter((task) => {
         const matchesSearch =
             task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            task.project.toLowerCase().includes(searchQuery.toLowerCase());
+            task.description.toLowerCase().includes(searchQuery.toLowerCase());
 
         const matchesStatus = selectedStatus.length === 0 || selectedStatus.includes(task.status);
         const matchesPriority = selectedPriority.length === 0 || selectedPriority.includes(task.priority);

@@ -17,19 +17,21 @@ export const getProjectColumns = () => [
             const currentStatusStyle = statusStyles[row.status] || 'bg-muted text-muted-foreground border-border';
 
             return `
-                <div class="flex items-center gap-4 py-3 cursor-pointer">
-                    <div class="size-11 rounded-xl bg-gradient-to-br ${row.color || 'from-blue-500 to-purple-500'} flex items-center justify-center shadow-lg shadow-black/5 group-hover:scale-110 transition-transform shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                    </div>
-                    <div class="flex flex-col min-w-0">
-                        <span class="font-bold text-foreground truncate text-sm group-hover:text-sada-red transition-colors uppercase tracking-tight leading-tight">${row.name}</span>
-                        <div class="mt-1">
-                            <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded-full border tracking-widest ${currentStatusStyle}">
-                                ${row.status.replace('-', ' ')}
-                            </span>
-                        </div>
+        <a href="/projects/${row.id}" class="flex items-center gap-4 py-3 cursor-pointer group no-underline">
+                <div class="size-11 rounded-xl bg-gradient-to-br ${row.color || 'from-blue-500 to-purple-500'} flex items-center justify-center shadow-lg shadow-black/5 group-hover:scale-110 transition-transform shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                </div>
+                <div class="flex flex-col min-w-0">
+                    <span class="font-bold text-foreground truncate text-sm group-hover:text-sada-red transition-colors uppercase tracking-tight leading-tight">
+                        ${row.name}
+                    </span>
+                    <div class="mt-1">
+                        <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded-full border tracking-widest ${currentStatusStyle}">
+                            ${row.status.replace('-', ' ')}
+                        </span>
                     </div>
                 </div>
+                </a>
             `;
         }
     },
@@ -103,7 +105,7 @@ export const getProjectColumns = () => [
         `
     },
     {
-        data: 'tasks', 
+        data: 'tasks',
         title: 'TASKS',
         width: '10%',
         className: 'text-left align-middle',
