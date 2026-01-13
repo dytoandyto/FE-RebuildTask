@@ -16,22 +16,22 @@ export const getWorkspaceColumns = () => [
             );
 
             return `
-                <div class="flex items-center gap-4 py-3 cursor-pointer">
-                    ${workspaceIcon}
-                    <div class="flex flex-col gap-1">
-                        <span class="font-black text-foreground text-[13px] group-hover:text-sada-red transition-colors uppercase tracking-tight leading-none">
-                            ${row.name}
-                        </span>
-                        <div class="flex items-center gap-2">
-                            <span class="text-[8px] font-black text-sada-red bg-sada-red/10 px-1.5 py-0.5 rounded border border-sada-red/20 uppercase tracking-widest">
-                                ${row.tasks?.total || 0} TASKS
-                            </span>
-                            <span class="text-[9px] font-bold text-muted-foreground tracking-tighter uppercase opacity-60">
-                                ID • WS-${row.id || '0'}
-                            </span>
-                        </div>
-                    </div>
+              <a href="/workspaces/${row.id}" class="flex items-center gap-4 py-3 cursor-pointer group no-underline">
+            ${workspaceIcon}
+            <div class="flex flex-col gap-1">
+                <span class="font-black text-foreground text-[13px] group-hover:text-sada-red transition-colors uppercase tracking-tight leading-none">
+                    ${row.name}
+                </span>
+                <div class="flex items-center gap-2 mt-0.5">
+                    <span class="text-[8px] font-black text-sada-red bg-sada-red/10 px-1.5 py-0.5 rounded border border-sada-red/20 uppercase tracking-widest shadow-sm">
+                        ${row.tasks?.total || 0} TASKS
+                    </span>
+                    <span class="text-[9px] font-bold text-muted-foreground/40 tracking-tighter uppercase">
+                        ID • WS-0${row.id || '0'}
+                    </span>
                 </div>
+            </div>
+        </a>
             `;
         }
     },

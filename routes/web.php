@@ -16,8 +16,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
     Route::get('workspaces', function () {
-        return Inertia::render('workspaces');
+        return Inertia::render('workspaces/workspaces');
     })->name('workspaces');
+    Route::get('workspaces/{id}', function ($id) {
+        return Inertia::render('workspaces/workspaces-detail', [
+            'id' => $id
+        ]);
+    })->name('workspaces.show');
+    
     Route::get('projects', function () {
         return Inertia::render('projects');
     })->name('projects');
