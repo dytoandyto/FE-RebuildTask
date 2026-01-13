@@ -25,7 +25,16 @@ export const PROJECTS_DUMMY: Project[] = [
         progress: 67,
         members: 8,
         priority: "high",
-        color: "bg-sada-red"
+        color: "bg-sada-red",
+        deadline: "2025-12-15",
+        manager: {
+            name: "",
+            avatar: ""
+        },
+        tasks: {
+            total: 0,
+            completed: 0
+        }
     },
     {
         id: 2,
@@ -35,7 +44,7 @@ export const PROJECTS_DUMMY: Project[] = [
         description: "Build native mobile applications for iOS and Android.",
         status: "in-progress",
         progress: 45,
-        deadline: "Jan 20, 2026",
+        deadline: "2026-01-30",
         manager: { name: "Emma Rodriguez", avatar: "https://i.pravatar.cc/150?u=2" },
         tasks: { total: 67, completed: 30 },
         members: 12,
@@ -50,7 +59,7 @@ export const PROJECTS_DUMMY: Project[] = [
         description: "Year-end marketing campaign for product launch.",
         status: "completed",
         progress: 100,
-        deadline: "Nov 30, 2025",
+        deadline: "2026-11-30",
         manager: { name: "James Wilson", avatar: "https://i.pravatar.cc/150?u=3" },
         tasks: { total: 28, completed: 28 },
         members: 6,
@@ -65,7 +74,7 @@ export const PROJECTS_DUMMY: Project[] = [
         description: "Migrate to new cloud infrastructure and optimize performance.",
         status: "planning",
         progress: 15,
-        deadline: "Dec 31, 2025",
+        deadline: "2025-12-30",
         manager: { name: "Sarah Mitchell", avatar: "https://i.pravatar.cc/150?u=4" },
         tasks: { total: 34, completed: 5 },
         members: 5,
@@ -80,7 +89,7 @@ export const PROJECTS_DUMMY: Project[] = [
         description: "Self-service portal for customer support and documentation.",
         status: "in-progress",
         progress: 82,
-        deadline: "Dec 5, 2025",
+        deadline: "2025-12-5",
         manager: { name: "Michael Chen", avatar: "https://i.pravatar.cc/150?u=1" },
         tasks: { total: 52, completed: 43 },
         members: 9,
