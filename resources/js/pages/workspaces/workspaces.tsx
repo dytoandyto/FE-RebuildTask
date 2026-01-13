@@ -2,8 +2,8 @@ import AppLayout from '@/layouts/app-layout';
 import { workspaces } from '@/routes';
 import { BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
-import { Page } from '@inertiajs/core';
-import { useState, useRef } from "react";
+import { Page, router } from '@inertiajs/core';
+import { useState, useRef, useEffect } from "react";
 import { WorkspaceHeader } from "@/layouts/workspace/WorkspaceHeader";
 import { WorkspaceControls } from "@/layouts/workspace/WorkspaceControls";
 import { WorkspaceCard } from "@/layouts/workspace/WorkspaceCard";
@@ -42,13 +42,23 @@ export default function Workspaces() {
         ws.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         ws.description.toLowerCase().includes(searchQuery.toLowerCase())
     );
+    useEffect(() => {
+        const handleNavigate = (e: any) => {
+            const workspaceId = e.detail;
+            // Ini akan mengarahkan ke localhost:8000/workspaces/{id}
+            router.visit(`/workspaces/${workspaceId}`);
+        };
+
+        window.addEventListener('navigate-to-workspace', handleNavigate);
+        return () => window.removeEventListener('navigate-to-workspace', handleNavigate);
+    }, []);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Workspaces" />
-            
+
             <div className="mx-auto w-full max-w-[1600px] flex flex-col gap-8 p-6 md:p-10 transition-all">
-                
+
                 <WorkspaceHeader
                     title="Workspaces"
                     description="Monitor and manage all your active team environments."
@@ -67,7 +77,7 @@ export default function Workspaces() {
                 {filteredWorkspaces.length > 0 ? (
                     viewMode === 'list' ? (
                         <div className="">
-                            <DataTableBase 
+                            <DataTableBase
                                 ref={tableRef}
                                 data={filteredWorkspaces}
                                 columns={getWorkspaceColumns()}

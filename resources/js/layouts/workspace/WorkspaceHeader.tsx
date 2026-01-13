@@ -1,5 +1,6 @@
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import CreateWorkspaceButton from "./CreateWorkspaceButton";
 
 interface WorkspaceHeaderProps {
     title?: string;
@@ -24,14 +25,6 @@ export const WorkspaceHeader = ({
             </p>
         </div>
         
-        <Button 
-            onClick={onAction}
-            className="h-12 px-6 bg-sada-red hover:bg-sada-red-hover text-white rounded-2xl shadow-lg shadow-sada-red/20 transition-all font-bold flex items-center gap-2 group active:scale-95 border-none"
-        >
-            <div className="bg-white/20 p-1 rounded-lg group-hover:rotate-90 transition-transform duration-300">
-                <Plus size={18} className="text-white" strokeWidth={3} />
-            </div>
-            {buttonText}
-        </Button>
+        <CreateWorkspaceButton />
     </div>
 );
