@@ -38,10 +38,7 @@ export const WorkspaceControls = ({
 
         {/* Filters & View Toggles */}
         <div className="flex items-center gap-3 w-full md:w-auto shrink-0">
-            <button className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-background border border-border rounded-2xl px-5 h-12 text-sm font-bold text-foreground hover:bg-muted hover:border-sada-red/30 transition-all active:scale-95 shadow-sm">
-                <Filter className="size-4 text-sada-red" /> 
-                Filters
-            </button>
+           
             
             <div className="flex items-center gap-1 bg-muted/50 p-1.5 rounded-2xl border border-border/50">
                 <ViewToggle 
