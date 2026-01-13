@@ -1,6 +1,7 @@
 import { X, Check } from "lucide-react";
 import { DateRangePicker } from "@/components/DateRangeFilter"; // Import komponen kalender lo
 import { DateRange } from "react-day-picker";
+import { WORKSPACES_DUMMY } from "@/data/workspace-data"; 
 
 interface ProjectFiltersProps {
     isVisible: boolean;
@@ -9,6 +10,8 @@ interface ProjectFiltersProps {
     selectedPriority: string[];
     setSelectedPriority: (priority: string[]) => void;
     onDateFilter: (range: DateRange | undefined) => void; // Tambahkan ini
+    selectedWorkspaces: number[];
+    setSelectedWorkspaces: (ids: number[]) => void;
     onReset: () => void;
 }
 
@@ -18,7 +21,9 @@ export const ProjectFilters = ({
     setSelectedStatus,
     selectedPriority,
     setSelectedPriority,
-    onDateFilter, // Terima props ini
+    selectedWorkspaces,
+    setSelectedWorkspaces,
+    onDateFilter,
     onReset
 }: ProjectFiltersProps) => {
     if (!isVisible) return null;
@@ -31,6 +36,14 @@ export const ProjectFilters = ({
             setter(currentArray.filter(item => item !== value));
         } else {
             setter([...currentArray, value]);
+        }
+    };
+
+    const toggleWorkspace = (id: number) => {
+        if (selectedWorkspaces.includes(id)) {
+            setSelectedWorkspaces(selectedWorkspaces.filter(item => item !== id));
+        } else {
+            setSelectedWorkspaces([...selectedWorkspaces, id]);
         }
     };
 
@@ -54,6 +67,31 @@ export const ProjectFilters = ({
                                 <div className="flex items-center gap-2 uppercase tracking-tighter">
                                     {selectedStatus.includes(status) && <Check className="size-3" />}
                                     {status.replace('-', ' ')}
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* TUGAS 2: Filter by Foreign Key (Workspace ID) */}
+                <div>
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">
+                        Filter by Workspace (Relational)
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                        {WORKSPACES_DUMMY.map((ws) => (
+                            <button
+                                key={ws.id}
+                                onClick={() => toggleWorkspace(ws.id)}
+                                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                                    selectedWorkspaces.includes(ws.id) 
+                                    ? 'bg-blue-600 border-blue-600 text-white shadow-md scale-105' 
+                                    : 'bg-muted/50 border-transparent text-muted-foreground hover:border-border'
+                                }`}
+                            >
+                                <div className="flex items-center gap-2 uppercase tracking-tighter">
+                                    {selectedWorkspaces.includes(ws.id) && <Check className="size-3" />}
+                                    {ws.name}
                                 </div>
                             </button>
                         ))}

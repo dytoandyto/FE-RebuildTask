@@ -14,6 +14,7 @@ import { projects } from "@/routes";
 import { DateRange } from "react-day-picker";
 import { startOfDay, endOfDay } from "date-fns";
 
+
 export default function Projects() {
     const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
     const [searchQuery, setSearchQuery] = useState("");
@@ -21,13 +22,14 @@ export default function Projects() {
     const [selectedPriority, setSelectedPriority] = useState<string[]>([]);
     const [showFilters, setShowFilters] = useState(false);
     const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+    const [selectedWorkspaces, setSelectedWorkspaces] = useState<number[]>([]);
 
     const filteredProjects = useMemo(() => {
         return PROJECTS_DUMMY.filter((project) => {
-        // 1. Search, Status, Priority (Aman)
         const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesStatus = selectedStatus.length === 0 || selectedStatus.includes(project.status);
         const matchesPriority = selectedPriority.length === 0 || selectedPriority.includes(project.priority);
+        const matchesWorkspace = selectedWorkspaces.length === 0 || selectedWorkspaces.includes(project.workspace_id);
 
         // 2. Logic Tanggal
         let matchesDate = true;
@@ -47,9 +49,9 @@ export default function Projects() {
             }
         }
 
-        return matchesSearch && matchesStatus && matchesPriority && matchesDate;
+        return matchesSearch && matchesStatus && matchesPriority && matchesWorkspace && matchesDate;
     });
-    }, [searchQuery, selectedStatus, selectedPriority, dateRange]);
+    }, [searchQuery, selectedStatus, selectedPriority, selectedWorkspaces, dateRange]);
 
     const statsSummary = {
         totalProjects: filteredProjects.length,
@@ -95,15 +97,21 @@ export default function Projects() {
                     setSelectedStatus={setSelectedStatus}
                     selectedPriority={selectedPriority}
                     setSelectedPriority={setSelectedPriority}
+                    
+                    // GANTI BAGIAN INI: pake state asli, jangan di-hardcode []
+                    selectedWorkspaces={selectedWorkspaces} 
+                    setSelectedWorkspaces={setSelectedWorkspaces} 
+                    
                     onDateFilter={(range) => {
-                        console.log("Range dipilih:", range); // Cek apakah range masuk ke sini
+                        console.log("Range dipilih:", range);
                         setDateRange(range);
                     }}
                     onReset={() => {
                         setSelectedStatus([]);
                         setSelectedPriority([]);
+                        setSelectedWorkspaces([]); // Reset juga di sini
                         setDateRange(undefined);
-                    }}
+                    }} 
                 />
 
                 <div className="mt-2">
