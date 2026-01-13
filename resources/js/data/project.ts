@@ -26,7 +26,7 @@ export const PROJECTS_DUMMY: Project[] = [
         members: 8,
         priority: "high",
         color: "bg-sada-red",
-        deadline: "2025-12-15",
+        deadline: "2026-01-30",
         manager: {
             name: "",
             avatar: ""

@@ -81,6 +81,12 @@ export default function Workspaces() {
                                 ref={tableRef}
                                 data={filteredWorkspaces}
                                 columns={getWorkspaceColumns()}
+                                options={{
+                                    pageLength: 10,
+                                    createdRow: (row: any) => {
+                                        row.classList.add('cursor-pointer');
+                                    }
+                                }}
                             />
                         </div>
                     ) : (
