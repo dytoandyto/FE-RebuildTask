@@ -1,4 +1,6 @@
 import { X, Check } from "lucide-react";
+import { DateRangePicker } from "@/components/DateRangeFilter"; // Import komponen kalender lo
+import { DateRange } from "react-day-picker";
 
 interface ProjectFiltersProps {
     isVisible: boolean;
@@ -6,6 +8,7 @@ interface ProjectFiltersProps {
     setSelectedStatus: (status: string[]) => void;
     selectedPriority: string[];
     setSelectedPriority: (priority: string[]) => void;
+    onDateFilter: (range: DateRange | undefined) => void; // Tambahkan ini
     onReset: () => void;
 }
 
@@ -15,6 +18,7 @@ export const ProjectFilters = ({
     setSelectedStatus,
     selectedPriority,
     setSelectedPriority,
+    onDateFilter, // Terima props ini
     onReset
 }: ProjectFiltersProps) => {
     if (!isVisible) return null;
@@ -33,6 +37,7 @@ export const ProjectFilters = ({
     return (
         <div className="bg-card border border-border rounded-[28px] p-6 mb-6 animate-in slide-in-from-top-4 duration-300 shadow-sm">
             <div className="flex flex-col gap-6">
+                {/* Status Filter */}
                 <div>
                     <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">Filter by Project Status</h4>
                     <div className="flex flex-wrap gap-2">
@@ -55,6 +60,7 @@ export const ProjectFilters = ({
                     </div>
                 </div>
 
+                {/* Priority Filter */}
                 <div>
                     <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">Filter by Priority</h4>
                     <div className="flex flex-wrap gap-2">
@@ -77,6 +83,18 @@ export const ProjectFilters = ({
                     </div>
                 </div>
 
+                {/* --- SEKSI DATE RANGE FILTER BARU --- */}
+                <div className="pt-2">
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">Filter by Deadline</h4>
+                    <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+                        <DateRangePicker onFilter={onDateFilter} />
+                        <span className="text-[10px] italic text-muted-foreground/60">
+                            * Pick a range to filter projects by their completion dates.
+                        </span>
+                    </div>
+                </div>
+
+                {/* Footer / Reset */}
                 <div className="pt-4 border-t border-border/50 flex justify-between items-center">
                     <p className="text-[10px] text-muted-foreground italic font-medium">
                         Showing projects based on active filters

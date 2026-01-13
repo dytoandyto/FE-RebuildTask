@@ -23,9 +23,6 @@ export const PROJECTS_DUMMY: Project[] = [
         description: "Complete redesign of company website with modern UI/UX.",
         status: "in-progress",
         progress: 67,
-        deadline: "Dec 15, 2025",
-        manager: { name: "Michael Chen", avatar: "https://i.pravatar.cc/150?u=1" },
-        tasks: { total: 45, completed: 30 },
         members: 8,
         priority: "high",
         color: "bg-sada-red"
