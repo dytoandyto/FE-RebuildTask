@@ -17,7 +17,7 @@ export const ViewRenderer = ({ currentView, data }: any) => {
                 <AnimationWrapper>
                     <div className="bg-card rounded-[40px] p-8 md:p-10 border border-border shadow-2xl shadow-black/5">
                         <div className="flex flex-col gap-1 mb-10 border-l-4 border-sada-red pl-6">
-                            <h2 className="text-3xl font-black uppercase italic tracking-tighter text-foreground">January 2026</h2>
+                            <h2 className="text-3xl font-black uppercase  tracking-tighter text-foreground">January 2026</h2>
                             <p className="text-[10px] text-muted-foreground uppercase font-black tracking-[0.2em] opacity-50">Fleet Activity Calendar</p>
                         </div>
                         <CalendarGrid {...data.calendarProps} />
@@ -30,7 +30,7 @@ export const ViewRenderer = ({ currentView, data }: any) => {
                 <AnimationWrapper>
                     <div className="flex flex-col gap-8">
                         <div className="ml-4 border-l-4 border-sada-red pl-6">
-                            <h3 className="text-xl font-black uppercase italic tracking-tighter">Operational Audit</h3>
+                            <h3 className="text-xl font-black uppercase  tracking-tighter">Operational Audit</h3>
                             <p className="text-[10px] text-muted-foreground uppercase font-black tracking-[0.2em] opacity-50">System Transmission Logs</p>
                         </div>
                         <div className="bg-background border border-border rounded-[40px] overflow-hidden shadow-2xl shadow-black/5">
@@ -46,10 +46,10 @@ export const ViewRenderer = ({ currentView, data }: any) => {
                     <div className="flex flex-col gap-8">
                         <div className="ml-4 border-l-4 border-sada-red pl-6 flex justify-between items-end">
                             <div>
-                                <h3 className="text-xl font-black uppercase italic tracking-tighter text-sada-red">Verification Center</h3>
+                                <h3 className="text-xl font-black uppercase  tracking-tighter text-sada-red">Verification Center</h3>
                                 <p className="text-[10px] text-muted-foreground uppercase font-black tracking-[0.2em] opacity-50">Pending Authorization</p>
                             </div>
-                            <span className="text-[10px] font-black bg-muted px-4 py-1 rounded-full border border-border italic text-muted-foreground">
+                            <span className="text-[10px] font-black bg-muted px-4 py-1 rounded-full border border-border  text-muted-foreground">
                                 {data.pendingLogs.length} LOGS DETECTED
                             </span>
                         </div>

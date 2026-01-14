@@ -44,12 +44,12 @@ export const LogItem = ({
                         <img src={`https://ui-avatars.com/api/?name=${name}&background=1a1a1a&color=fff`} className="size-full object-cover" />
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-[12px] font-black text-foreground uppercase italic leading-none">{name}</span>
+                        <span className="text-[12px] font-black text-foreground uppercase leading-none">{name}</span>
                         <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-tighter mt-1">{date}</span>
                     </div>
                 </div>
                 <div className="bg-muted/30 px-3 py-1 rounded-lg border border-border mr-28 flex items-center gap-2">
-                    <span className="text-[11px] font-black italic text-foreground">{duration} <small className="text-[8px] not-italic opacity-50 uppercase">HRS</small></span>
+                    <span className="text-[11px] font-black text-foreground">{duration} <small className="text-[8px] not-italic opacity-50 uppercase">HRS</small></span>
                 </div>
             </div>
             
