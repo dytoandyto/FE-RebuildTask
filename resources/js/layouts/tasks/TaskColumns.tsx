@@ -19,29 +19,29 @@ export const getTaskColumns = (getStatusInfo: any, getPriorityInfo: any) => [
             const currentStatusStyle = statusStyles[row.status] || statusStyles.todo;
 
             return `
-            <div class="flex items-center gap-4 py-4 cursor-pointer group">
-                <div class="size-12 rounded-2xl bg-gradient-to-br from-sada-red to-red-900 flex items-center justify-center shadow-lg shadow-sada-red/20 group-hover:scale-105 transition-all duration-300 shrink-0 border border-white/5 ring-1 ring-white/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-sm">
-                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                </div>
+            <a href="/tasks/${row.id}" class="flex items-center gap-4 py-4 cursor-pointer group no-underline">
+            <div class="size-12 rounded-2xl bg-gradient-to-br from-sada-red to-red-900 flex items-center justify-center shadow-lg shadow-sada-red/20 group-hover:scale-105 transition-all duration-300 shrink-0 border border-white/5 ring-1 ring-white/10">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-sm">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </div>
 
-                <div class="flex flex-col gap-1.5 min-w-0">
-                    <span class="font-black text-foreground text-[13px] group-hover:text-sada-red transition-colors uppercase  tracking-tight leading-none truncate">
-                        ${row.title}
+            <div class="flex flex-col gap-1.5 min-w-0">
+                <span class="font-black text-foreground text-[13px] group-hover:text-sada-red transition-colors uppercase tracking-tight leading-none truncate">
+                    ${row.title}
+                </span>
+                
+                <div class="flex items-center gap-2">
+                    <span class="text-[8px] font-black px-2 py-0.5 rounded-md border tracking-[0.15em] uppercase  ${currentStatusStyle}">
+                        ${row.status.replace('-', ' ')}
                     </span>
                     
-                    <div class="flex items-center gap-2">
-                        <span class="text-[8px] font-black px-2 py-0.5 rounded-md border tracking-[0.15em] uppercase  ${currentStatusStyle}">
-                            ${row.status.replace('-', ' ')}
-                        </span>
-                        
-                        <span class="text-[9px] font-bold text-muted-foreground/40 tracking-tighter uppercase">
-                            ${row.id}
-                        </span>
-                    </div>
+                    <span class="text-[9px] font-bold text-muted-foreground/40 tracking-tighter uppercase">
+                        ${row.id}
+                    </span>
                 </div>
             </div>
+        </a>
         `;
         }
     },
