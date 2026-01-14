@@ -9,6 +9,7 @@ import { TaskDetailTabs } from '@/layouts/tasks/taks-detail/TaskDetailTabs';
 import { TaskTimesheets } from '@/layouts/tasks/taks-detail/tabs/TasksTimesheets';
 import { TaskOverview } from '@/layouts/tasks/taks-detail/tabs/TaskOverview';
 import { TaskDocuments } from '@/layouts/tasks/taks-detail/tabs/TaskDocuments';
+import { workspaces } from '@/routes';
 
 export default function TaskDetail({ id }: { id: string }) {
     const [activeTab, setActiveTab] = useState<'brief' | 'timesheets' | 'docs'>('brief');
@@ -18,6 +19,7 @@ export default function TaskDetail({ id }: { id: string }) {
 
     const breadcrumbs: BreadcrumbItem[] = [
         { title: 'Workspaces', href: '/workspaces' },
+        { title: task.workspace_name, href: workspaces().url },
         { title: task.project_name, href: `/projects/${task.project_id}` },
         { title: task.id, href: '#' },
     ];
