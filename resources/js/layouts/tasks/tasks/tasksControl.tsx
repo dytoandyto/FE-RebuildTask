@@ -56,23 +56,6 @@ export const TaskControls = ({
             {/* TUGAS BARU: Date Picker Section */}
             <Popover>
                 <PopoverTrigger asChild>
-                    <button className={cn(
-                        "flex items-center justify-center gap-2 border rounded-2xl px-4 h-12 text-sm font-bold transition-all bg-background border-border hover:bg-muted",
-                        dateRange?.from && "border-sada-red/50 text-sada-red bg-sada-red/5"
-                    )}>
-                        <CalendarIcon className="size-4" />
-                        <span className="hidden sm:inline">
-                            {dateRange?.from ? (
-                                dateRange.to ? (
-                                    `${format(dateRange.from, "LLL dd")} - ${format(dateRange.to, "LLL dd")}`
-                                ) : (
-                                    format(dateRange.from, "LLL dd")
-                                )
-                            ) : (
-                                "Pick Date"
-                            )}
-                        </span>
-                    </button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0 rounded-[28px]" align="end">
                     <Calendar

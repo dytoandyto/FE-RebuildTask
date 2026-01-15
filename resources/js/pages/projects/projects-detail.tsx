@@ -4,7 +4,11 @@ import { Head } from '@inertiajs/react';
 import { useState, useMemo, useRef } from 'react';
 import { DateRange } from 'react-day-picker';
 import { endOfDay, startOfDay } from 'date-fns';
-import { Check } from 'lucide-react';
+import { Calendar as CalendarIcon, Check } from "lucide-react"; // Tambahin CalendarIcon & Check
+import { format } from "date-fns"; // Untuk formatting teks tanggal di tombol
+import { cn } from "@/lib/utils"; // Helper classname (biasanya bawaan shadcn)
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
 
 // Data
 import { TASKS_LIST_DUMMY } from "@/data/tasksList";
@@ -128,68 +132,81 @@ export default function ProjectShow({ id }: Props) {
                         />
 
                         {/* PANEL FILTER TASK (Yang tadinya hilang) */}
-                        {showFilters && (
-                            <div className="bg-card border border-border rounded-[32px] p-8 mb-2 animate-in slide-in-from-top-4 duration-500 shadow-sm">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    {/* Status Filter */}
-                                    <div>
-                                        <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-4">Task Status</h4>
-                                        <div className="flex flex-wrap gap-2">
-                                            {['todo', 'in-progress', 'completed', 'overdue'].map((s) => (
-                                                <button
-                                                    key={s}
-                                                    onClick={() => toggleFilter(selectedStatus, setSelectedStatus, s)}
-                                                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
-                                                        selectedStatus.includes(s) 
-                                                        ? 'bg-sada-red border-sada-red text-white shadow-md' 
-                                                        : 'bg-muted/50 border-transparent text-muted-foreground'
-                                                    }`}
-                                                >
-                                                    <span className="flex items-center gap-2">
-                                                        {selectedStatus.includes(s) && <Check className="size-3" />}
+                            {showFilters && (
+                                <div className="bg-card border border-border rounded-[32px] p-8 mb-2 animate-in slide-in-from-top-4 duration-500 shadow-sm">
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8"> {/* Ubah jadi 3 kolom agar muat */}
+                                        
+                                        {/* 1. Filter Status */}
+                                        <div>
+                                            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-4">Task Status</h4>
+                                            <div className="flex flex-wrap gap-2">
+                                                {['todo', 'in-progress', 'completed', 'overdue'].map((s) => (
+                                                    <button key={s} onClick={() => toggleFilter(selectedStatus, setSelectedStatus, s)}
+                                                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                                                            selectedStatus.includes(s) ? 'bg-sada-red border-sada-red text-white' : 'bg-muted/50 text-muted-foreground'
+                                                        }`}>
                                                         {s.toUpperCase()}
-                                                    </span>
-                                                </button>
-                                            ))}
+                                                    </button>
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    {/* Priority Filter */}
-                                    <div>
-                                        <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-4">Priority Level</h4>
-                                        <div className="flex flex-wrap gap-2">
-                                            {['low', 'medium', 'high'].map((p) => (
-                                                <button
-                                                    key={p}
-                                                    onClick={() => toggleFilter(selectedPriority, setSelectedPriority, p)}
-                                                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
-                                                        selectedPriority.includes(p) 
-                                                        ? 'bg-sada-red border-sada-red text-white shadow-md' 
-                                                        : 'bg-muted/50 border-transparent text-muted-foreground'
-                                                    }`}
-                                                >
-                                                    <span className="flex items-center gap-2">
-                                                        {selectedPriority.includes(p) && <Check className="size-3" />}
+                                        {/* 2. Filter Priority */}
+                                        <div>
+                                            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-4">Priority Level</h4>
+                                            <div className="flex flex-wrap gap-2">
+                                                {['low', 'medium', 'high'].map((p) => (
+                                                    <button key={p} onClick={() => toggleFilter(selectedPriority, setSelectedPriority, p)}
+                                                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                                                            selectedPriority.includes(p) ? 'bg-sada-red border-sada-red text-white' : 'bg-muted/50 text-muted-foreground'
+                                                        }`}>
                                                         {p.toUpperCase()}
-                                                    </span>
-                                                </button>
-                                            ))}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* 3. TUGAS BARU: Date Range Picker di Dalam Filter */}
+                                        <div>
+                                            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-4">Due Date Range</h4>
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <button className={`w-full flex items-center gap-3 px-4 h-11 rounded-xl border text-xs font-bold transition-all ${
+                                                        dateRange?.from ? 'border-sada-red/50 bg-sada-red/5 text-sada-red' : 'border-border bg-muted/30 text-muted-foreground'
+                                                    }`}>
+                                                        <CalendarIcon className="size-4" />
+                                                        {dateRange?.from ? (
+                                                            dateRange.to ? (
+                                                                `${format(dateRange.from, "dd MMM")} - ${format(dateRange.to, "dd MMM")}`
+                                                            ) : format(dateRange.from, "dd MMM")
+                                                        ) : "Select date range..."}
+                                                    </button>
+                                                </PopoverTrigger>
+                                                <PopoverContent className="w-auto p-0 rounded-[28px]" align="start">
+                                                    <Calendar
+                                                        mode="range" // INI KUNCINYA: agar bisa pilih tanggal awal & akhir
+                                                        selected={dateRange}
+                                                        onSelect={setDateRange}
+                                                        numberOfMonths={2}
+                                                        initialFocus
+                                                    />
+                                                </PopoverContent>
+                                            </Popover>
                                         </div>
                                     </div>
+                                    
+                                    <button 
+                                        onClick={() => {
+                                            setSelectedStatus([]);
+                                            setSelectedPriority([]);
+                                            setDateRange(undefined);
+                                        }}
+                                        className="mt-8 text-[10px] font-black text-sada-red uppercase tracking-widest hover:opacity-70"
+                                    >
+                                        Clear All Task Filters
+                                    </button>
                                 </div>
-                                
-                                <button 
-                                    onClick={() => {
-                                        setSelectedStatus([]);
-                                        setSelectedPriority([]);
-                                        setDateRange(undefined);
-                                    }}
-                                    className="mt-6 text-[10px] font-black text-sada-red uppercase tracking-widest hover:opacity-70 transition-opacity"
-                                >
-                                    Clear All Task Filters
-                                </button>
-                            </div>
-                        )}
+                            )}
 
                         {/* DATA VIEW */}
                         <div className="mt-2">
