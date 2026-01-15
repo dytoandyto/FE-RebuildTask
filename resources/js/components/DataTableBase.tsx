@@ -2,12 +2,14 @@ import React, { forwardRef, useEffect, useState, useImperativeHandle, useRef } f
 import DataTable from 'datatables.net-react';
 import DT from 'datatables.net-dt';
 import 'datatables.net-responsive-dt';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 
 DataTable.use(DT);
 
 const DataTableBase = forwardRef<any, any>(({ columns, data, options }, ref) => {
     const internalRef = useRef<any>(null);
+    // 1. Tambahin state buat simpen page length
+    const [pageSize, setPageSize] = useState(options?.pageLength || 5);
     const [pageInfo, setPageInfo] = useState({ 
         start: 0, 
         end: 0, 
@@ -32,6 +34,15 @@ const DataTableBase = forwardRef<any, any>(({ columns, data, options }, ref) => 
                 pages: info.pages
             });
         } catch (e) {}
+    };
+
+    // 2. Fungsi buat handle perubahan jumlah data per halaman
+    const handlePageSizeChange = (newSize: number) => {
+        if (!internalRef.current) return;
+        const dt = internalRef.current.dt();
+        dt.page.len(newSize).draw(); // Set length baru ke DataTables
+        setPageSize(newSize);
+        updatePageInfo();
     };
 
     useEffect(() => {
@@ -95,7 +106,7 @@ const DataTableBase = forwardRef<any, any>(({ columns, data, options }, ref) => 
                 options={{
                     dom: 't',
                     responsive: true,
-                    pageLength: 5,
+                    pageLength: pageSize, // Gunakan state pageSize
                     destroy: true,
                     retrieve: true,
                     drawCallback: () => updatePageInfo(),
@@ -105,19 +116,35 @@ const DataTableBase = forwardRef<any, any>(({ columns, data, options }, ref) => 
                 className="w-full text-foreground"
             />
 
-            {/* Pagination Controls - Adaptive Colors */}
+            {/* Pagination Controls */}
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 px-2 border-t border-border pt-6">
-                <div className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
-                    Showing <span className="text-foreground">{pageInfo.start}</span> to <span className="text-foreground">{pageInfo.end}</span> of <span className="text-foreground">{pageInfo.total}</span> entries
+                {/* 3. BAGIAN KIRI: Info + Selector Page Size */}
+                <div className="flex items-center gap-4">
+                    <div className="relative flex items-center">
+                        <select 
+                            value={pageSize}
+                            onChange={(e) => handlePageSizeChange(Number(e.target.value))}
+                            className="select-custom bg-muted/50 border border-border rounded-lg pl-3 pr-8 py-1.5 text-[11px] font-black text-foreground focus:outline-none focus:ring-1 focus:ring-sada-red/50 transition-all cursor-pointer"
+                        >
+                            {[5, 10, 25, 50].map((size) => (
+                                <option key={size} value={size}>{size}</option>
+                            ))}
+                        </select>
+                        <ChevronDown size={12} className="absolute right-2.5 pointer-events-none text-muted-foreground" />
+                    </div>
+
+                    <div className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
+                        Showing <span className="text-foreground">{pageInfo.start}</span> to <span className="text-foreground">{pageInfo.end}</span> of <span className="text-foreground">{pageInfo.total}</span> entries
+                    </div>
                 </div>
 
+                {/* BAGIAN KANAN: Pagination Buttons */}
                 <div className="flex items-center gap-2">
-                    {/* PREV BUTTON */}
                     <button
                         type="button"
                         onClick={() => handlePageClick(pageInfo.current - 1)}
                         disabled={pageInfo.current === 0}
-                        className="flex items-center gap-2 h-10 px-4 rounded-xl border border-border bg-card text-[12px] font-bold text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+                        className="flex items-center gap-2 h-10 px-4 rounded-xl border border-border bg-card text-[12px] font-bold text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-20 transition-all"
                     >
                         <ChevronLeft size={16} /> Prev
                     </button>
