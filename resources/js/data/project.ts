@@ -96,4 +96,19 @@ export const PROJECTS_DUMMY: Project[] = [
         priority: "high",
         color: "bg-sada-red"
     },
+    {
+        id: 6,
+        workspace_id: 3,
+        workspace_name: "Penetrasi sawit",
+        name: "Sawit Corp",
+        description: "Sawit katanya bisa mengambil air lebih banyak kata nya ya",
+        status: "overdue",
+        progress: 82,
+        deadline: "2026-12-1",
+        manager: { name: "Michael Chen", avatar: "https://i.pravatar.cc/150?u=1" },
+        tasks: { total: 52, completed: 43 },
+        members: 9,
+        priority: "high",
+        color: "bg-sada-red"
+    },
 ];

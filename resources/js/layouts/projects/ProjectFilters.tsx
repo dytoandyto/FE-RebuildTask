@@ -101,7 +101,7 @@ export const ProjectFilters = ({
                         </div>
                     </div>
                 )}
-                
+
                 {/* Priority Filter */}
                 <div>
                     <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">Filter by Priority</h4>
@@ -124,16 +124,6 @@ export const ProjectFilters = ({
                         ))}
                     </div>
                 </div>
-
-                {showWorkspaceFilter && (
-                <div className="mb-6">
-                    <h4 className="text-[10px] font-black uppercase ...">
-                        Filter by Workspace (Relational)
-                    </h4>
-                    <div className="flex flex-wrap gap-2 mt-3">
-                    </div>
-                </div>
-            )}
 
                 {/* --- SEKSI DATE RANGE FILTER BARU --- */}
                 <div className="pt-2">
