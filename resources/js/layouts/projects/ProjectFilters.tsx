@@ -12,6 +12,7 @@ interface ProjectFiltersProps {
     onDateFilter: (range: DateRange | undefined) => void; // Tambahkan ini
     selectedWorkspaces: number[];
     setSelectedWorkspaces: (ids: number[]) => void;
+    showWorkspaceFilter?: boolean;
     onReset: () => void;
 }
 
@@ -24,6 +25,7 @@ export const ProjectFilters = ({
     selectedWorkspaces,
     setSelectedWorkspaces,
     onDateFilter,
+    showWorkspaceFilter = true,
     onReset
 }: ProjectFiltersProps) => {
     if (!isVisible) return null;
@@ -73,30 +75,32 @@ export const ProjectFilters = ({
                     </div>
                 </div>
 
-                {/* TUGAS 2: Filter by Foreign Key (Workspace ID) */}
-                <div>
-                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">
-                        Filter by Workspace (Relational)
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                        {WORKSPACES_DUMMY.map((ws) => (
-                            <button
-                                key={ws.id}
-                                onClick={() => toggleWorkspace(ws.id)}
-                                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
-                                    selectedWorkspaces.includes(ws.id) 
-                                    ? 'bg-blue-600 border-blue-600 text-white shadow-md scale-105' 
-                                    : 'bg-muted/50 border-transparent text-muted-foreground hover:border-border'
-                                }`}
-                            >
-                                <div className="flex items-center gap-2 uppercase tracking-tighter">
-                                    {selectedWorkspaces.includes(ws.id) && <Check className="size-3" />}
-                                    {ws.name}
-                                </div>
-                            </button>
-                        ))}
+                {/* 2. TUGAS 2: Filter by Workspace - PINDAHKAN LOGIC KE SINI */}
+                {showWorkspaceFilter && (
+                    <div>
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">
+                            Filter by Workspace (Relational)
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                            {WORKSPACES_DUMMY.map((ws) => (
+                                <button
+                                    key={ws.id}
+                                    onClick={() => toggleWorkspace(ws.id)}
+                                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
+                                        selectedWorkspaces.includes(ws.id) 
+                                        ? 'bg-blue-600 border-blue-600 text-white shadow-md scale-105' 
+                                        : 'bg-muted/50 border-transparent text-muted-foreground hover:border-border'
+                                    }`}
+                                >
+                                    <div className="flex items-center gap-2 uppercase tracking-tighter">
+                                        {selectedWorkspaces.includes(ws.id) && <Check className="size-3" />}
+                                        {ws.name}
+                                    </div>
+                                </button>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
 
                 {/* Priority Filter */}
                 <div>
