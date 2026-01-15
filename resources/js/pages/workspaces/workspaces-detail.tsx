@@ -98,6 +98,7 @@ export default function WorkspacesShow({ id }: { id: string }) {
                                 selectedPriority={selectedPriority}
                                 setSelectedPriority={setSelectedPriority}
                                 onDateFilter={(range) => setDateRange(range)}
+                                showWorkspaceFilter={false}
                                 onReset={() => {
                                     setSelectedStatus([]);
                                     setSelectedPriority([]);
