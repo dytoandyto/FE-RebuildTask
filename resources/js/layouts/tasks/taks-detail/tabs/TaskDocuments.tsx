@@ -1,17 +1,25 @@
-import { FileIcon, ImageIcon, FileTextIcon, ExternalLink, Download, Search, LayoutGrid } from 'lucide-react';
+import { useState } from 'react'; // 1. Tambahin ini
+import { FileIcon, ImageIcon, FileTextIcon, ExternalLink, Download, Search, LayoutGrid, FileX } from 'lucide-react';
 
 interface Props {
     task: any;
 }
 
 export const TaskDocuments = ({ task }: Props) => {
-    // Data dummy untuk dokumen
+    // 2. Tambah State untuk search
+    const [searchQuery, setSearchQuery] = useState("");
+
     const documents = [
         { id: 1, name: 'site_survey_v1.png', size: '2.4 MB', type: 'image', date: '12 Jan 2026', uploader: 'Andyto' },
         { id: 2, name: 'technical_specs.pdf', size: '1.1 MB', type: 'pdf', date: '13 Jan 2026', uploader: 'Michael' },
         { id: 3, name: 'budget_analysis.xlsx', size: '850 KB', type: 'excel', date: '14 Jan 2026', uploader: 'Sarah' },
         { id: 4, name: 'initial_briefing.docx', size: '450 KB', type: 'word', date: '14 Jan 2026', uploader: 'Andyto' },
     ];
+
+    // 3. Logic Filter: Nyari berdasarkan nama
+    const filteredDocuments = documents.filter(doc => 
+        doc.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const getFileIcon = (type: string) => {
         switch (type) {
@@ -31,6 +39,8 @@ export const TaskDocuments = ({ task }: Props) => {
                     <input
                         type="text"
                         placeholder="Search evidence..."
+                        value={searchQuery} // 4. Hubungin ke state
+                        onChange={(e) => setSearchQuery(e.target.value)} // 5. Update state pas diketik
                         className="w-full bg-background border-border rounded-xl pl-10 text-[10px] font-black uppercase tracking-widest focus:ring-sada-red"
                     />
                 </div>
@@ -40,27 +50,34 @@ export const TaskDocuments = ({ task }: Props) => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-
-                {/* --- KIRI: FILE GALLERY (GRID) --- */}
                 <div className="lg:col-span-3">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                        {documents.map((doc) => (
-                            <div key={doc.id} className="group bg-background border border-border rounded-2xl p-4 hover:border-sada-red/40 transition-all shadow-sm flex flex-col gap-4">
-                                <div className="size-full aspect-video bg-muted/30 rounded-xl flex items-center justify-center border border-dashed border-border group-hover:bg-muted/50 transition-colors">
-                                    {getFileIcon(doc.type)}
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                    <span className="text-[11px] font-black text-foreground uppercase truncate">{doc.name}</span>
-                                    <div className="flex justify-between items-center opacity-60">
-                                        <span className="text-[8px] font-bold text-muted-foreground uppercase">{doc.size} • {doc.date}</span>
-                                        <button className="text-sada-red hover:scale-110 transition-transform">
-                                            <Download size={14} />
-                                        </button>
+                    {/* 6. Cek kalau hasil filter kosong */}
+                    {filteredDocuments.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                            {filteredDocuments.map((doc) => (
+                                <div key={doc.id} className="group bg-background border border-border rounded-2xl p-4 hover:border-sada-red/40 transition-all shadow-sm flex flex-col gap-4">
+                                    <div className="size-full aspect-video bg-muted/30 rounded-xl flex items-center justify-center border border-dashed border-border group-hover:bg-muted/50 transition-colors">
+                                        {getFileIcon(doc.type)}
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <span className="text-[11px] font-black text-foreground uppercase truncate">{doc.name}</span>
+                                        <div className="flex justify-between items-center opacity-60">
+                                            <span className="text-[8px] font-bold text-muted-foreground uppercase">{doc.size} • {doc.date}</span>
+                                            <button className="text-sada-red hover:scale-110 transition-transform">
+                                                <Download size={14} />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    ) : (
+                        // 7. Tampilan kalau nggak ketemu apa-apa
+                        <div className="flex flex-col items-center justify-center py-20 border-2 border-dashed border-border rounded-[32px] opacity-50">
+                            <FileX size={48} className="text-muted-foreground mb-4" />
+                            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">No matching intelligence found</p>
+                        </div>
+                    )}
                 </div>
 
                 {/* --- KANAN: EXTERNAL LINKS & SUMMARY --- */}

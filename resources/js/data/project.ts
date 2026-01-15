@@ -99,7 +99,7 @@ export const PROJECTS_DUMMY: Project[] = [
     {
         id: 6,
         workspace_id: 3,
-        workspace_name: "Penetrasi sawit",
+        workspace_name: "Customer Support",
         name: "Sawit Corp",
         description: "Sawit katanya bisa mengambil air lebih banyak kata nya ya",
         status: "overdue",
