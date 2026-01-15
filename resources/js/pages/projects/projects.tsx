@@ -16,7 +16,7 @@ import { startOfDay, endOfDay } from "date-fns";
 
 
 export default function Projects() {
-    const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+    const [viewMode, setViewMode] = useState<"grid" | "list">("list");
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
     const [selectedPriority, setSelectedPriority] = useState<string[]>([]);

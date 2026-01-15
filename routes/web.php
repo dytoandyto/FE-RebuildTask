@@ -49,8 +49,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('bugs');
     })->name('bugs');
     Route::get('timesheets', function () {
-        return Inertia::render('timesheets');
+        return Inertia::render('timesheets/timesheets');
     })->name('timesheets');
+
     Route::get('reports', function () {
         return Inertia::render('reports');
     })->name('reports');
