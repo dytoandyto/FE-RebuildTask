@@ -1,4 +1,9 @@
-import { Search, Filter, Grid3x3, List, X, ChevronDown } from "lucide-react";
+import { Search, Filter, Grid3x3, List, X, ChevronDown, Calendar as CalendarIcon } from "lucide-react";
+import { DateRange } from "react-day-picker";
+import { format } from "date-fns";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"; // Pastikan pathnya bener
+import { Calendar } from "@/components/ui/calendar"; // Pastikan pathnya bener
+import { cn } from "@/lib/utils";
 
 interface TaskControlsProps {
     viewMode: 'list' | 'board';
@@ -8,6 +13,8 @@ interface TaskControlsProps {
     showFilters: boolean;
     setShowFilters: (show: boolean) => void;
     activeFiltersCount: number;
+    onDateFilter?: (range: DateRange | undefined) => void;
+    dateRange?: DateRange; // Tambahin ini biar tombolnya bisa nampilin tanggal yang dipilih
 }
 
 export const TaskControls = ({
@@ -17,7 +24,9 @@ export const TaskControls = ({
     setSearchQuery,
     showFilters,
     setShowFilters,
-    activeFiltersCount
+    activeFiltersCount,
+    onDateFilter,
+    dateRange
 }: TaskControlsProps) => (
     <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-card rounded-[24px] p-3 shadow-sm border border-border mb-6 transition-all">
 
@@ -26,7 +35,7 @@ export const TaskControls = ({
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-muted-foreground group-focus-within:text-sada-red transition-colors" />
             <input
                 type="text"
-                placeholder="Search tasks, projects, or tags..."
+                placeholder="Search tasks..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 h-12 rounded-2xl border-none bg-muted/30 focus:bg-background focus:ring-4 focus:ring-sada-red/10 transition-all text-sm font-medium text-foreground placeholder:text-muted-foreground"
@@ -43,6 +52,40 @@ export const TaskControls = ({
 
         {/* Action Buttons & Toggles */}
         <div className="flex items-center gap-3 w-full md:w-auto shrink-0">
+            
+            {/* TUGAS BARU: Date Picker Section */}
+            <Popover>
+                <PopoverTrigger asChild>
+                    <button className={cn(
+                        "flex items-center justify-center gap-2 border rounded-2xl px-4 h-12 text-sm font-bold transition-all bg-background border-border hover:bg-muted",
+                        dateRange?.from && "border-sada-red/50 text-sada-red bg-sada-red/5"
+                    )}>
+                        <CalendarIcon className="size-4" />
+                        <span className="hidden sm:inline">
+                            {dateRange?.from ? (
+                                dateRange.to ? (
+                                    `${format(dateRange.from, "LLL dd")} - ${format(dateRange.to, "LLL dd")}`
+                                ) : (
+                                    format(dateRange.from, "LLL dd")
+                                )
+                            ) : (
+                                "Pick Date"
+                            )}
+                        </span>
+                    </button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0 rounded-[28px]" align="end">
+                    <Calendar
+                        initialFocus
+                        mode="range"
+                        defaultMonth={dateRange?.from}
+                        selected={dateRange}
+                        onSelect={onDateFilter}
+                        numberOfMonths={2}
+                    />
+                </PopoverContent>
+            </Popover>
+
             {/* Filter Button */}
             <button
                 onClick={() => setShowFilters(!showFilters)}
