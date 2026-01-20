@@ -5,31 +5,25 @@ interface ProjectHeaderProps {
     title?: string;
     description?: string;
     onAction?: () => void;
+    onCreateProject: () => void;
 }
 
-export const ProjectHeader = ({ 
-    title = "Project Management", 
-    description = "Manage and track all your team projects",
-    onAction 
-}: ProjectHeaderProps) => (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-10">
-        <div className="space-y-1">
-            <h1 className="text-3xl font-black tracking-tight text-foreground transition-colors">
-                {title}
-            </h1>
-            <p className="text-sm text-muted-foreground font-medium">
-                {description}
-            </p>
-        </div>
-        
-        <Button 
-            onClick={onAction}
-            className="h-12 px-6 bg-sada-red hover:bg-sada-red-hover text-white rounded-2xl shadow-lg shadow-sada-red/20 transition-all font-bold flex items-center gap-2 group active:scale-95 border-none"
-        >
-            <div className="bg-white/20 p-1 rounded-lg group-hover:rotate-90 transition-transform duration-300">
-                <Plus size={18} className="text-white" strokeWidth={3} />
+export const ProjectHeader = ({ onCreateProject }: ProjectHeaderProps) => {
+    return (
+        <div className="flex justify-between items-center mb-8">
+            <div>
+                <h1 className="text-2xl font-black uppercase tracking-tighter">Project Management</h1>
+                <p className="text-xs text-muted-foreground uppercase font-bold opacity-50">Manage and track all your team projects</p>
             </div>
-            Create Project
-        </Button>
-    </div>
-);
+
+            {/* Tombol yang lo maksud tadi bro */}
+            <button 
+                onClick={onCreateProject} // 4. Pasang di sini
+                className="bg-sada-red hover:bg-red-700 text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 shadow-lg shadow-sada-red/20 active:scale-95"
+            >
+                <Plus size={14} strokeWidth={3} />
+                Create Project
+            </button>
+        </div>
+    );
+};
