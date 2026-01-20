@@ -13,10 +13,13 @@ import { BreadcrumbItem } from "@/types";
 import { projects } from "@/routes";
 import { DateRange } from "react-day-picker";
 import { startOfDay, endOfDay } from "date-fns";
+import { CreateProjectModal } from "@/components/modal/CreateProjectModal";
+import { WORKSPACES_DUMMY } from "@/data/workspace-data";
 
 
 export default function Projects() {
     const [viewMode, setViewMode] = useState<"grid" | "list">("list");
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
     const [selectedPriority, setSelectedPriority] = useState<string[]>([]);
@@ -53,6 +56,21 @@ export default function Projects() {
     });
     }, [searchQuery, selectedStatus, selectedPriority, selectedWorkspaces, dateRange]);
 
+     const allManagers = useMemo(() => {
+        const membersMap = new Map();
+        WORKSPACES_DUMMY.forEach(ws => {
+            ws.members.forEach(member => {
+                // Kita pake nama sebagai key supaya gak double kalau orangnya ada di 2 workspace
+                membersMap.set(member.name, { 
+                    id: member.name, // Sementara ID pake nama karena di dummy ga ada user_id
+                    name: member.name,
+                    avatar: member.avatar 
+                });
+            });
+        });
+        return Array.from(membersMap.values());
+    }, []);
+
     const statsSummary = {
         totalProjects: filteredProjects.length,
         totalInProgress: filteredProjects.filter(p => p.status === 'in-progress').length,
@@ -74,7 +92,14 @@ export default function Projects() {
             <Head title="Projects" />
             <div className="mx-auto w-full max-w-[1600px] flex flex-col gap-8 p-6 md:p-10 transition-all">
 
-                <ProjectHeader />
+            <ProjectHeader onCreateProject={() => setIsModalOpen(true)} />
+
+                <CreateProjectModal 
+                isOpen={isModalOpen} 
+                onClose={() => setIsModalOpen(false)}
+                workspaces={WORKSPACES_DUMMY} // Data Workspace asli lo
+                managers={allManagers}       // Data Member yang dicollect tadi
+            />
 
                 <ProjectStats
                     totalProjects={statsSummary.totalProjects}
@@ -113,6 +138,8 @@ export default function Projects() {
                         setDateRange(undefined);
                     }} 
                 />
+                
+                
 
                 <div className="mt-2">
                     {viewMode === 'list' ? (
