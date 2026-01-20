@@ -1,9 +1,11 @@
 import { CalendarGrid } from '@/layouts/timesheets/calendar-grid';
 import { TimesheetTable } from '@/layouts/timesheets/time-table';
 import { LogItem } from '@/layouts/timesheets/components-tasks/LogItems';
-import { BarChart3, Loader2 } from 'lucide-react';
+import { BarChart3, Clock, FileUp, Hash, Loader2, Paperclip, Plus, Send } from 'lucide-react';
+import { MemberRoutineView } from './member/MemberRoutineView';
 
 export const ViewRenderer = ({ currentView, data }: any) => {
+    const { onRoutineClick } = data;
     // Helper untuk container animasi agar seragam
     const AnimationWrapper = ({ children }: { children: React.ReactNode }) => (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both">
@@ -18,7 +20,7 @@ export const ViewRenderer = ({ currentView, data }: any) => {
                     <div className="bg-card rounded-[40px] p-8 md:p-10 border border-border shadow-2xl shadow-black/5">
                         <div className="flex flex-col gap-1 mb-10 border-l-4 border-sada-red pl-6">
                             <h2 className="text-3xl font-black uppercase  tracking-tighter text-foreground">January 2026</h2>
-                            <p className="text-[10px] text-muted-foreground uppercase font-black tracking-[0.2em] opacity-50">Fleet Activity Calendar</p>
+                            <p className="text-[10px] text-muted-foreground uppercase font-black tracking-[0.2em] opacity-50">Activity Calendar</p>
                         </div>
                         <CalendarGrid {...data.calendarProps} />
                     </div>
@@ -55,9 +57,9 @@ export const ViewRenderer = ({ currentView, data }: any) => {
                         </div>
                         <div className="grid grid-cols-1 gap-5">
                             {data.pendingLogs.map((log: any, i: number) => (
-                                <div key={i} 
-                                     className="animate-in fade-in slide-in-from-right-4 duration-500 fill-mode-both"
-                                     style={{ animationDelay: `${i * 100}ms` }} // Efek stagger (satu-satu muncul)
+                                <div key={i}
+                                    className="animate-in fade-in slide-in-from-right-4 duration-500 fill-mode-both"
+                                    style={{ animationDelay: `${i * 100}ms` }} // Efek stagger (satu-satu muncul)
                                 >
                                     <LogItem {...log} isManagerView={true} />
                                 </div>
@@ -80,6 +82,14 @@ export const ViewRenderer = ({ currentView, data }: any) => {
                     </div>
                 </AnimationWrapper>
             );
+
+        case 'member':
+            return (
+                <AnimationWrapper>
+                   <MemberRoutineView onRoutineClick={data.onRoutineClick} />
+                </AnimationWrapper>
+            );
+
 
         default:
             return null;

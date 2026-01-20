@@ -2,10 +2,11 @@ import { Calendar, ListFilter, ShieldCheck, BarChart3, Search, Filter } from 'lu
 
 export const TimesheetControls = ({ currentView, setCurrentView, searchQuery, setSearchQuery }: any) => {
     const tabs = [
-        { id: 'calendar', label: 'Fleet Activity', icon: Calendar },
+        { id: 'calendar', label: 'Activity Calendar', icon: Calendar },
         { id: 'audit', label: 'Operational Audit', icon: ListFilter },
         { id: 'review', label: 'Verification Center', icon: ShieldCheck },
         { id: 'analytics', label: 'Operational Analytics', icon: BarChart3 },
+        { id: 'member', label: 'Test Member', icon: Filter },
     ];
 
     return (
@@ -26,22 +27,6 @@ export const TimesheetControls = ({ currentView, setCurrentView, searchQuery, se
                             <span className="hidden md:inline">{tab.label}</span>
                         </button>
                     ))}
-                </div>
-
-                {/* Search Bar */}
-                <div className="relative w-full md:w-72 group">
-                    <input
-                        type="text"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Search..."
-                        className="w-full bg-muted/10 hover:bg-muted/2border-border focus:border-sada-red/5rounded-2xlpl-11pr-4py-2.text-[10px]font-blackuppercastracking-[0.15em]placeholder:text-muted-foreground/4placeholder:italifocus:ring-4 focus:ring-sada-red/transition-allduration-30outline-none"
-                    />
-
-                    {/* Garis aksen kecil di pojok untuk memperkuat kesan industrial */}
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 flex gap-1 opacity-0 group-focus-within:opacity-100 transition-opacity">
-                        <div className="size-1 bg-sada-red rounded-full animate-pulse" />
-                    </div>
                 </div>
             </div>
         </div>
