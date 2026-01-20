@@ -8,6 +8,7 @@ import { WorkspaceDetailTabs } from '@/layouts/workspace/detail-project/Workspac
 // Import Tabs yang baru kita buat
 import { ProjectsTab } from "./tabs/ProjectsTab";
 import { MembersTab } from "./tabs/MembersTab";
+import { SettingsTab } from "./tabs/SettingsTab";
 
 export default function WorkspacesShow({ id }: { id: string }) {
     const [activeTab, setActiveTab] = useState<'projects' | 'members' | 'settings'>('projects');
@@ -24,12 +25,7 @@ export default function WorkspacesShow({ id }: { id: string }) {
                 <div className="min-h-[400px]">
                     {activeTab === 'projects' && <ProjectsTab workspaceId={id} />}
                     {activeTab === 'members' && <MembersTab workspaceId={id} />}
-                    
-                    {activeTab === 'settings' && (
-                        <div className="animate-in fade-in py-20 text-center border border-white/5 rounded-[32px] bg-muted/10">
-                            <p className="text-muted-foreground uppercase font-black tracking-widest text-[10px]">Settings Restricted</p>
-                        </div>
-                    )}
+                    {activeTab === 'settings' && <SettingsTab workspace={id} />}
                 </div>
             </div>
         </AppLayout>
