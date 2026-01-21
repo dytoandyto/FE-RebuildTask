@@ -19,7 +19,7 @@ import { TaskControls } from '@/components/tasks/tasks/tasksControl';
 import { TaskTable } from '@/components/tasks/tasks/taskTable';
 import { TaskBoard } from '@/components/tasks/tasks/tasksBoard';
 
-// Tabs Internal Components (Bisa dipisah filenya nanti)
+// Tabs Internal Components jews
 import { ProjectMembersTab } from './tabs/ProjectMembersTab';
 import { ProjectSettingsTab } from './tabs/ProjectSettingsTab';
 
