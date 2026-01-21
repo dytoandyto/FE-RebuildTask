@@ -1,5 +1,5 @@
 import { home } from "@/routes";
-import AppLogoIcon from "../../components/app-logo-icon";
+import AppLogoIcon from "../app-logo-icon";
 import { Link } from "@inertiajs/react";
 import { Earth, Github, Instagram, Linkedin, Mail, Twitter, WholeWordIcon, X } from "lucide-react";
 

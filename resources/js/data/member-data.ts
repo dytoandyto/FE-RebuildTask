@@ -17,7 +17,7 @@ export const MEMBERS_DUMMY: Member[] = [
         role: "company",
         initials: "CJ",
         status: "active",
-        project_ids: [1, 2, 3]
+        project_ids: [1, 2,]
     },
     {
         id: 2,
@@ -35,7 +35,7 @@ export const MEMBERS_DUMMY: Member[] = [
         role: "project_manager",
         initials: "BU",
         status: "active",
-        project_ids: [1]
+        project_ids: [1, 6]
     },
     {
         id: 4,
@@ -44,7 +44,15 @@ export const MEMBERS_DUMMY: Member[] = [
         role: "member",
         initials: "AW",
         status: "pending",
-        project_ids: [2, 3]
+        project_ids: [2, 3, 6]
     },
-    // Tambahin sebanyak yang lo mau...
+    {
+        id: 5,
+        name: "prabowo",
+        email: "pra.bowo@member.com",
+        role: "member",
+        initials: "PA",
+        status: "active",
+        project_ids: [2, 3, 6]
+    },
 ];

@@ -1,11 +1,11 @@
 import AppLayout from "@/layouts/app-layout";
-import { ProjectHeader } from "@/layouts/projects/ProjectHeader";
-import { ProjectStats } from "@/layouts/projects/ProjectStats";
-import { ProjectControls } from "@/layouts/projects/ProjectControls";
-import { ProjectCard } from "@/layouts/projects/ProjectCard";
+import { ProjectHeader } from "@/components/projects/ProjectHeader";
+import { ProjectStats } from "@/components/projects/ProjectStats";
+import { ProjectControls } from "@/components/projects/ProjectControls";
+import { ProjectCard } from "@/components/projects/ProjectCard";
 import DataTableBase from "@/components/DataTableBase";
-import { getProjectColumns } from "@/layouts/projects/ProjectColumns";
-import { ProjectFilters } from "@/layouts/projects/ProjectFilters";
+import { getProjectColumns } from "@/components/projects/ProjectColumns";
+import { ProjectFilters } from "@/components/projects/ProjectFilters";
 import { PROJECTS_DUMMY } from "@/data/project";
 import { Head } from "@inertiajs/react";
 import { useState, useMemo } from "react";

@@ -1,6 +1,6 @@
 import { Users, LayoutGrid } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ImageWithFallback } from "../../components/ImageWithFallback";
+import { ImageWithFallback } from "../ImageWithFallback";
 
 interface MemberProps {
     name: string;

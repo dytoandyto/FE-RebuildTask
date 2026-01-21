@@ -2,8 +2,8 @@ import AppLayout from '@/layouts/app-layout';
 import { Head } from '@inertiajs/react';
 import { useState } from "react";
 import { WORKSPACES_DUMMY } from "@/data/workspace-data";
-import { WorkspaceDetailHeader } from '@/layouts/workspace/detail-project/WorkspaceDetailHeader';
-import { WorkspaceDetailTabs } from '@/layouts/workspace/detail-project/WorkspaceDetailTabs';
+import { WorkspaceDetailHeader } from '@/components/workspace/detail-project/WorkspaceDetailHeader';
+import { WorkspaceDetailTabs } from '@/components/workspace/detail-project/WorkspaceDetailTabs';
 
 // Import Tabs yang baru kita buat
 import { ProjectsTab } from "./tabs/ProjectsTab";

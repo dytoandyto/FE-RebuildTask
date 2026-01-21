@@ -5,10 +5,10 @@ import { TIME_STATS_DUMMY } from '@/data/time-stat';
 import { generateCalendarDays } from '@/data/time-calendar';
 import { calendarEvents } from '@/data/time-calendar-events';
 import { timeEntries } from '@/data/time-entries';
-import { TimesheetHeader } from '@/layouts/timesheets/TimesheetHeader';
-import { TimesheetStats } from '@/layouts/timesheets/timesheetStats';
-import { TimesheetControls } from '@/layouts/timesheets/control/TImesheetsControl';
-import { ViewRenderer } from '@/layouts/timesheets/ViewRenderer';
+import { TimesheetHeader } from '@/components/timesheets/TimesheetHeader';
+import { TimesheetStats } from '@/components/timesheets/timesheetStats';
+import { TimesheetControls } from '@/components/timesheets/control/TImesheetsControl';
+import { ViewRenderer } from '@/components/timesheets/ViewRenderer';
 import { BreadcrumbItem } from '@/types';
 import { timesheets } from '@/routes';
 

@@ -1,6 +1,6 @@
-import { CalendarGrid } from '@/layouts/timesheets/calendar-grid';
-import { TimesheetTable } from '@/layouts/timesheets/time-table';
-import { LogItem } from '@/layouts/timesheets/components-tasks/LogItems';
+import { CalendarGrid } from '@/components/timesheets/calendar-grid';
+import { TimesheetTable } from '@/components/timesheets/time-table';
+import { LogItem } from '@/components/timesheets/components-tasks/LogItems';
 import { BarChart3, Loader2 } from 'lucide-react';
 
 export const ViewRenderer = ({ currentView, data }: any) => {

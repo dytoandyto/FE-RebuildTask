@@ -1,10 +1,10 @@
 import { useState, useMemo } from "react";
 import { PROJECTS_DUMMY } from "@/data/project";
-import { ProjectCard } from "@/layouts/projects/ProjectCard";
+import { ProjectCard } from "@/components/projects/ProjectCard";
 import DataTableBase from "@/components/DataTableBase";
-import { getProjectColumns } from "@/layouts/projects/ProjectColumns";
-import { ProjectControls } from "@/layouts/projects/ProjectControls";
-import { ProjectFilters } from "@/layouts/projects/ProjectFilters";
+import { getProjectColumns } from "@/components/projects/ProjectColumns";
+import { ProjectControls } from "@/components/projects/ProjectControls";
+import { ProjectFilters } from "@/components/projects/ProjectFilters";
 import { DateRange } from "react-day-picker";
 import { startOfDay, endOfDay } from "date-fns";
 

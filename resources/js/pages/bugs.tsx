@@ -4,9 +4,9 @@ import { PERMISSION_CARDS } from '@/data/permission-data';
 import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import { Page } from '@inertiajs/core';
-import { BugStats } from '@/layouts/bug-stat/bug-stat';
-import { BugHeader } from '@/layouts/bug-stat/bug-header';
-import { BugTable } from '@/layouts/bug-stat/bug-table';
+import { BugStats } from '@/components/bug-stat/bug-stat';
+import { BugHeader } from '@/components/bug-stat/bug-header';
+import { BugTable } from '@/components/bug-stat/bug-table';
 import { BUG_REQUEST_DUMMY } from '@/data/bug-data';
 interface BugsProps extends Page {
     auth: {
