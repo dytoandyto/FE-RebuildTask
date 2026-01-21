@@ -1,4 +1,4 @@
-import { ImageWithFallback } from "../ImageWithFallback";
+import { ImageWithFallback } from "../../components/ImageWithFallback";
 
 export function ProductPreview() {
   return (

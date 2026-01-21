@@ -4,13 +4,13 @@ import { BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import { Page, router } from '@inertiajs/core';
 import { useState, useRef, useEffect } from "react";
-import { WorkspaceHeader } from "@/components/workspace/index/WorkspaceHeader";
-import { WorkspaceControls } from "@/components/workspace/index/WorkspaceControls";
-import { WorkspaceCard } from "@/components/workspace/index/WorkspaceCard";
-import { WorkspaceStats } from "@/components/workspace/index/WorkspacesStats";
+import { WorkspaceHeader } from "@/layouts/workspace/index/WorkspaceHeader";
+import { WorkspaceControls } from "@/layouts/workspace/index/WorkspaceControls";
+import { WorkspaceCard } from "@/layouts/workspace/index/WorkspaceCard";
+import { WorkspaceStats } from "@/layouts/workspace/index/WorkspacesStats";
 import { WORKSPACES_DUMMY } from "@/data/workspace-data";
 import DataTableBase from '@/components/DataTableBase';
-import { getWorkspaceColumns } from "@/components/workspace/index/getWorkspaceColumns";
+import { getWorkspaceColumns } from "@/layouts/workspace/index/getWorkspaceColumns";
 
 // 1. Definisi Interface (Harus di luar function agar tidak error)
 interface WorkspacesProps extends Page {

@@ -5,17 +5,25 @@ import { TIME_STATS_DUMMY } from '@/data/time-stat';
 import { generateCalendarDays } from '@/data/time-calendar';
 import { calendarEvents } from '@/data/time-calendar-events';
 import { timeEntries } from '@/data/time-entries';
-import { TimesheetHeader } from '@/components/timesheets/TimesheetHeader';
-import { TimesheetStats } from '@/components/timesheets/timesheetStats';
-import { TimesheetControls } from '@/components/timesheets/control/TImesheetsControl';
-import { ViewRenderer } from '@/components/timesheets/ViewRenderer';
+import { TimesheetHeader } from '@/layouts/timesheets/TimesheetHeader';
+import { TimesheetStats } from '@/layouts/timesheets/timesheetStats';
+import { TimesheetControls } from '@/layouts/timesheets/control/TImesheetsControl';
+import { ViewRenderer } from '@/layouts/timesheets/ViewRenderer';
 import { BreadcrumbItem } from '@/types';
 import { timesheets } from '@/routes';
+import { RoutineDetailModal } from '@/components/modal/RoutineDetailModal';
 
 export default function Timesheets() {
     const [currentView, setCurrentView] = useState<'calendar' | 'audit' | 'review' | 'analytics'>('calendar');
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedTask, setSelectedTask] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const handleOpenModal = (task: any) => {
+        setSelectedTask(task);
+        setIsModalOpen(true);
+
+    };
     const calendarProps = {
         calendarDays: generateCalendarDays(),
         today: 14,
@@ -48,7 +56,17 @@ export default function Timesheets() {
 
                 <ViewRenderer
                     currentView={currentView}
-                    data={{ calendarProps, timeEntries, pendingLogs }}
+                    data={{
+                        calendarProps,
+                        timeEntries,
+                        pendingLogs,
+                        onRoutineClick: handleOpenModal
+                    }}
+                />
+                <RoutineDetailModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    taskData={selectedTask}
                 />
             </div>
         </AppLayout>

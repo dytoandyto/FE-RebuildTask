@@ -4,13 +4,13 @@ import { PERMISSION_CARDS } from '@/data/permission-data';
 import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import { Page } from '@inertiajs/core';
-import { TeamStats } from '@/components/team/teamStat';
-import { MemberCard } from '@/components/team/memberCard';
-import { TeamTable } from '@/components/team/teamMember';
+import { TeamStats } from '@/layouts/team/teamStat';
+import { MemberCard } from '@/layouts/team/memberCard';
+import { TeamTable } from '@/layouts/team/teamMember';
 import { useState } from 'react';
 import { TEAMS_DUMMY } from '@/data/team';
-import { TeamHeader } from '@/components/team/teamHeader';
-import { TeamControls } from '@/components/team/teamControl';
+import { TeamHeader } from '@/layouts/team/teamHeader';
+import { TeamControls } from '@/layouts/team/teamControl';
 interface TeamsProps extends Page {
     auth: {
         user: {

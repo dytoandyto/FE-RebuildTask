@@ -1,4 +1,4 @@
-import { ImageWithFallback } from "../ImageWithFallback";
+import { ImageWithFallback } from "../../components/ImageWithFallback";
 import { Star, Quote } from "lucide-react";
 
 const testimonials = [

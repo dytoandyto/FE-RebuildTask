@@ -7,7 +7,7 @@ interface TabsProps {
 
 export const ProjectDetailTabs = ({ activeTab, setActiveTab }: TabsProps) => {
     const tabs = [
-        { id: 'Tasks', label: 'Tasks', icon: LayoutGrid }, // Ganti 'Projects' jadi 'Tasks'
+        { id: 'Tasks', label: 'Projects', icon: LayoutGrid },
         { id: 'members', label: 'Members', icon: Users2 },
         { id: 'settings', label: 'Settings', icon: Settings },
     ];
@@ -18,11 +18,10 @@ export const ProjectDetailTabs = ({ activeTab, setActiveTab }: TabsProps) => {
                 <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                        activeTab === tab.id
+                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === tab.id
                             ? 'bg-background text-sada-red shadow-lg border border-white/5 ring-1 ring-white/10'
                             : 'text-muted-foreground hover:text-foreground'
-                    }`}
+                        }`}
                 >
                     <tab.icon size={14} />
                     {tab.label}

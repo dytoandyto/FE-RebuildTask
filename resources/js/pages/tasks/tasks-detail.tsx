@@ -4,11 +4,11 @@ import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 import { ArrowLeft, MessageSquare, CheckCircle2 } from 'lucide-react';
 import { TASKS_LIST_DUMMY } from "@/data/tasksList";
-import { TaskDetailHeader } from '@/components/tasks/taks-detail/TaskDetailHeader';
-import { TaskDetailTabs } from '@/components/tasks/taks-detail/TaskDetailTabs';
-import { TaskTimesheets } from '@/components/tasks/taks-detail/tabs/TasksTimesheets';
-import { TaskOverview } from '@/components/tasks/taks-detail/tabs/TaskOverview';
-import { TaskDocuments } from '@/components/tasks/taks-detail/tabs/TaskDocuments';
+import { TaskDetailHeader } from '@/layouts/tasks/taks-detail/TaskDetailHeader';
+import { TaskDetailTabs } from '@/layouts/tasks/taks-detail/TaskDetailTabs';
+import { TaskTimesheets } from '@/layouts/tasks/taks-detail/tabs/TasksTimesheets';
+import { TaskOverview } from '@/layouts/tasks/taks-detail/tabs/TaskOverview';
+import { TaskDocuments } from '@/layouts/tasks/taks-detail/tabs/TaskDocuments';
 import { workspaces } from '@/routes';
 
 export default function TaskDetail({ id }: { id: string }) {
