@@ -13,6 +13,11 @@ import { Calendar } from "@/components/ui/calendar";
 // Data
 import { TASKS_LIST_DUMMY } from "@/data/tasksList";
 import { PROJECTS_DUMMY } from '@/data/project';
+import { ProjectDetailHeader } from '@/layouts/projects/project-details/ProjectDetailHeader';
+import { ProjectDetailTabs } from '@/layouts/projects/project-details/ProjectDetailTabs';
+import { TaskControls } from '@/layouts/tasks/tasks/tasksControl';
+import { TaskTable } from '@/layouts/tasks/tasks/taskTable';
+import { TaskBoard } from '@/layouts/tasks/tasks/tasksBoard';
 
 // --- HELPERS ---
 const getStatusInfo = (status: string) => {
