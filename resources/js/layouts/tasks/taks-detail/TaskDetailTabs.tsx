@@ -10,6 +10,7 @@ export const TaskDetailTabs = ({ activeTab, setActiveTab }: Props) => {
         { id: 'brief', label: 'Mission Brief', icon: FileText },
         { id: 'timesheets', label: 'Operation Logs', icon: Clock },
         { id: 'docs', label: 'Documentation', icon: Paperclip },
+        { id: 'activity', label:  'Activity', icon: Paperclip }, 
     ];
 
     return (

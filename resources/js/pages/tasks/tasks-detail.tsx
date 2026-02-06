@@ -10,9 +10,10 @@ import { TaskTimesheets } from '@/layouts/tasks/taks-detail/tabs/TasksTimesheets
 import { TaskOverview } from '@/layouts/tasks/taks-detail/tabs/TaskOverview';
 import { TaskDocuments } from '@/layouts/tasks/taks-detail/tabs/TaskDocuments';
 import { workspaces } from '@/routes';
+import { TaskActionCenter } from '@/layouts/tasks/taks-detail/tabs/TasksActivity';
 
 export default function TaskDetail({ id }: { id: string }) {
-    const [activeTab, setActiveTab] = useState<'brief' | 'timesheets' | 'docs'>('brief');
+    const [activeTab, setActiveTab] = useState<'brief' | 'timesheets' | 'docs' | 'activity'>('brief');
 
     // Ambil Data Task
     const task = TASKS_LIST_DUMMY.find(t => t.id === id) || TASKS_LIST_DUMMY[0];
@@ -40,6 +41,7 @@ export default function TaskDetail({ id }: { id: string }) {
                     {activeTab === 'brief' && <TaskOverview task={task} />}
                     {activeTab === 'timesheets' && <TaskTimesheets task={task} />}
                     {activeTab === 'docs' && <TaskDocuments task={task} />}
+                    {activeTab === 'activity' && <TaskActionCenter task={task} />}
                 </div>
             </div>
         </AppLayout>

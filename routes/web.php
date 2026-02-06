@@ -42,6 +42,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
     })->name('tasks.show');
 
+    Route::get('subtasks', function () {
+        return Inertia::render('subtasks/subtasks');
+    })->name('subtasks');
+    Route::get('subtasks/{id}', function ($id) {
+        return Inertia::render('subtasks/subtasks-detail', [
+            'id' => $id
+        ]);
+    })->name('subtasks.show');
+
     Route::get('teams', function () {
         return Inertia::render('teams');
     })->name('teams');

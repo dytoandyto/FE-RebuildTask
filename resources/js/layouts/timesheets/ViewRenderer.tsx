@@ -2,6 +2,8 @@ import { CalendarGrid } from '@/layouts/timesheets/calendar-grid';
 import { TimesheetTable } from '@/layouts/timesheets/time-table';
 import { LogItem } from '@/layouts/timesheets/components-tasks/LogItems';
 import { BarChart3, Loader2 } from 'lucide-react';
+import MemberRoutineView from './member/MemberRoutineView';
+
 
 export const ViewRenderer = ({ currentView, data }: any) => {
     // Helper untuk container animasi agar seragam
@@ -78,6 +80,12 @@ export const ViewRenderer = ({ currentView, data }: any) => {
                         <h3 className="mt-6 text-[10px] font-black uppercase tracking-[0.3em] text-foreground">Initializing Analytics Engine</h3>
                         <p className="text-[9px] text-muted-foreground uppercase font-bold mt-2">Connecting to Data Warehouse Sector 7...</p>
                     </div>
+                </AnimationWrapper>
+            );
+        case 'member':
+            return (
+                <AnimationWrapper>
+                    <MemberRoutineView {...data} />
                 </AnimationWrapper>
             );
 
